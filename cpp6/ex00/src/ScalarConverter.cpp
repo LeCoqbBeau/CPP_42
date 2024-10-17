@@ -153,7 +153,7 @@ void Serialize::print(void *value, t_type type)
 		charPrint(static_cast<char>(floatValue),
 			!isCharPrintable(isFloatInteger(floatValue), floatValue));
 		intPrint(static_cast<int>(floatValue),
-				!(isFloatInteger(floatValue) && floatValue <= INT_MAX && floatValue >= INT_MIN));
+				!(isFloatInteger(floatValue) && floatValue <= (float)INT_MAX && floatValue >= INT_MIN));
 		floatPrint(floatValue);
 		doublePrint(static_cast<double>(floatValue));
 		break;

@@ -1,4 +1,4 @@
-NAME = veryComplicatedDataSerializer
+NAME = base
 
 INCLUDES = inc/
 
@@ -7,7 +7,7 @@ CC = c++
 
 SRC_DIR = src/
 SRC_NAME =	main.cpp \
-			Serializer.cpp
+			Base.cpp
 
 OBJ_DIR = obj/
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
