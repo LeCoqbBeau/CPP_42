@@ -105,8 +105,6 @@ void BitcoinExchange::printValue(const StockMarket &market) const {
 	for (BitcoinExchange::const_iterator it = cbegin(); it != cend(); ++it) {
 		it->first.print();
 		PRINT "=> " BYLW AND it->second;
-		PRINT BGRN " = " AND it->second * market[it->first] AND CLR ENDL;
+		PRINT CLR " = " BGRN AND it->second * market[it->first] AND CLR ENDL;
 	}
 }
-
-
