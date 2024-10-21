@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	} catch (std::exception &e) {
 		ERROR BRED AND e.what() AND CLR ENDL;
 		returnValue = 1;
-		goto end_of_main;
+		goto main_unleak;
 	}
 
 	try {
@@ -37,11 +37,12 @@ int main(int argc, char *argv[]) {
 	} catch (std::exception &e) {
 		ERROR BRED AND e.what() AND CLR ENDL;
 		returnValue = 1;
-		goto end_of_main;
+		goto main_unleak;
 	}
 
-end_of_main:
+main_unleak:
 	delete market;
+
 main_return:
 	return (returnValue);
 }
