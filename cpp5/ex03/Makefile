@@ -2,7 +2,7 @@ NAME = intern
 
 INCLUDES = inc/
 
-CPP_FLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -g --std=c++98
+CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -g --std=c++98
 CXX = c++
 
 SRC_DIR = src/
@@ -19,15 +19,12 @@ OBJ_NAME = $(SRC_NAME:.cpp=.o)
 OBJ = $(patsubst %, $(OBJ_DIR)%, $(OBJ_NAME))
 $(OBJ_DIR)%.o:$(SRC_DIR)%.cpp
 	@mkdir -p $(dir $@)
-	@$(CXX) $(CPP_FLAGS) $< -c -o $@
+	@$(CXX) $(CFLAGS) $< -c -o $@
 	@echo "\033[1;36m Compiled" $(*F)
 
-%.o:%.cpp
-	@$(CXX) $(CPP_FLAGS) $< -c -o $@
-	@echo "\033[1;36m Compiled" $<
 
 $(NAME): $(OBJ)
-	@$(CXX) $(CPP_FLAGS) -o $(NAME) $(OBJ)
+	@$(CXX) $(CFLAGS) -o $(NAME) $(OBJ)
 	@echo "\033[1;32m Executable" $(NAME) "created"
 
 clean:

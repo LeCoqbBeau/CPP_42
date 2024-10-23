@@ -2,7 +2,7 @@ NAME = diamondtrap
 
 INCLUDES = inc/
 
-CPP_FLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98
+CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98
 CC = c++
 
 SRC_DIR = src/
@@ -17,15 +17,12 @@ OBJ_NAME = $(SRC_NAME:.cpp=.o)
 OBJ = $(patsubst %, $(OBJ_DIR)%, $(OBJ_NAME))
 $(OBJ_DIR)%.o:$(SRC_DIR)%.cpp
 	@mkdir -p $(dir $@)
-	@$(CC) $(CPP_FLAGS) $< -c -o $@
+	@$(CC) $(CFLAGS) $< -c -o $@
 	@echo "\033[1;36m Compiled" $(*F)
 
-%.o:%.cpp
-	@$(CC) $(CPP_FLAGS) $< -c -o $@
-	@echo "\033[1;36m Compiled" $<
 
 $(NAME): $(OBJ)
-	@c++ $(CPP_FLAGS) -o $(NAME) $(OBJ)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 	@echo "\033[1;32m Executable" $(NAME) "created"
 
 clean:

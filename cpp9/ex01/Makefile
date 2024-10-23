@@ -1,14 +1,13 @@
-NAME = phonebook
+NAME = RPN
 
 INCLUDES = inc/
 
-CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98
+CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98 -g
 CC = c++
 
 SRC_DIR = src/
-SRC_NAME =	Contact.cpp \
-			PhoneBook.cpp \
-			main.cpp
+SRC_NAME =	main.cpp \
+			RPN.cpp \
 
 OBJ_DIR = obj/
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
