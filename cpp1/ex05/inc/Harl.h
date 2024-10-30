@@ -9,9 +9,12 @@
 #include <iostream>
 #include "colors.h"
 
+#define HARL_LEVEL 4
+
 class Harl {
 	private:
-		void (Harl::*_funcPTR[4])(void);
+		void (Harl::*_funcPTR[HARL_LEVEL])(void);
+		std::string _level[HARL_LEVEL];
 		void debug();
 		void info();
 		void warning();

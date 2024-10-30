@@ -9,6 +9,18 @@
 #include <iostream>
 #include "colors.h"
 
+#define HARL_FALLTHROUGH __attribute__ ((fallthrough))
+
+enum e_Level {
+	DEBUG = 0,
+	INFO,
+	WARNING,
+	ERROR,
+	E_LEVEL_END
+};
+
+e_Level& operator++(e_Level& s);
+
 class Harl {
 	private:
 		void _debug();
@@ -16,7 +28,7 @@ class Harl {
 		void _warning();
 		void _error();
 	public:
-		void complain(std::string level);
+		void complain(const std::string &level);
 };
 
 #endif //HARL_H

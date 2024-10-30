@@ -6,26 +6,40 @@
 
 static void incorrect_level();
 
-void Harl::complain(std::string level) {
-	int	i;
+e_Level& operator++(e_Level& s) {
+	s = static_cast<e_Level>(s + 1);
+	return s;
+}
 
-	i = -1;
-	if (level == "DEBUG")
-		i = 0;
-	if (level == "INFO")
-		i = 1;
-	if (level == "WARNING")
-		i = 2;
-	if (level == "ERROR")
-		i = 3;
-	switch (i) {
-		case 0:
+static e_Level strToLevel(const std::string &level) {
+	const std::string levels[4] = {
+		"DEBUG",
+		"INFO",
+		"WARNING",
+		"ERROR",
+	};
+
+	for (e_Level i = DEBUG; i < E_LEVEL_END; ++i) {
+		if (level == levels[i])
+			return (i);
+	}
+	return (E_LEVEL_END);
+}
+
+void Harl::complain(const std::string &level) {
+	e_Level log = strToLevel(level);
+
+	switch (log) {
+		case DEBUG:
 			_debug();
-		case 1:
+			HARL_FALLTHROUGH;
+		case INFO:
 			_info();
-		case 2:
+			HARL_FALLTHROUGH;
+		case WARNING:
 			_warning();
-		case 3:
+			HARL_FALLTHROUGH;
+		case ERROR:
 			_error();
 			break;
 		default:

@@ -7,10 +7,10 @@
 FileReplace::FileReplace(const std::string &path, const std::string &s1, const std::string &s2) {
 	this->_infile.open(path.c_str(), std::ios::in);
 	if (!this->_infile)
-		exit(error(1));
+		throw std::runtime_error("Couldn't open infile");
 	this->_outfile.open(std::string(path + ".replace").c_str(), std::ios::out);
 	if (!this->_outfile)
-		exit(error(2));
+		throw std::runtime_error("Couldn't open outfile");
 	this->_seek = s1;
 	this->_replace = s2;
 }
@@ -34,6 +34,8 @@ void FileReplace::modifyBuffer(unsigned long start_index) {
 	unsigned long	index;
 	std::string		tmp;
 
+	if (_seek == _replace)
+		return ;
 	if (_seek.empty())
 	{
 		_buffer = mult_str(_replace, _buffer.length());
@@ -48,7 +50,7 @@ void FileReplace::modifyBuffer(unsigned long start_index) {
 	tmp += _replace;
 	tmp += _buffer.substr(index + _seek.length());
 	_buffer = tmp;
-	modifyBuffer(index);
+	modifyBuffer(index + _replace.length());
 }
 
 static std::string mult_str(const std::string &replace, unsigned long n) {

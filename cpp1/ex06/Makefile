@@ -2,7 +2,7 @@ NAME = harlFilter
 
 INCLUDES = inc/
 
-CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98 -g
+CFLAGS = -I$(INCLUDES) -Wall -Werror -Wextra -std=c++98 -Wimplicit-fallthrough -g
 CC = c++
 
 SRC_DIR = src/

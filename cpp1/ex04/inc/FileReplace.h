@@ -8,7 +8,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
+#include <stdexcept>
+
 #include "colors.h"
 
 class FileReplace {
@@ -19,7 +20,7 @@ class FileReplace {
 		std::string		_seek;
 		std::string		_replace;
 		void	readLine();
-		void	modifyBuffer(unsigned long start_index=0);
+		void	modifyBuffer(unsigned long start_index = 0);
 		void	writeLine();
 	public:
 		FileReplace(const std::string &path, const std::string &s1, const std::string &s2);
@@ -27,7 +28,5 @@ class FileReplace {
 		void	run();
 
 };
-
-int	error(int num);
 
 #endif //FILEREPLACE_H
