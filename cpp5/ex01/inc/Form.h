@@ -1,58 +1,56 @@
 #ifndef FORM_H
 # define FORM_H
 
-# include <iostream>
-# include <string>
-# include "colors.h"
+# include "utils.h"
 
 class Form;
 
 # include "Bureaucrat.h"
 
-class Form
-{
-public:
-	// Orthodox Canonical Form
-	Form();
-	Form(const std::string &name, const int &signGrade, const int &execGrade);
-	Form(const Form &src);
-	Form&operator=(const Form &rhs);
-	~Form();
-
-	// Accessors
-	const std::string &getName() const;
-	const bool &getIsSigned() const;
-	const int &getSignGrade() const;
-	const int &getExecGrade() const;
-
-	// Methods
-	void beSigned(Bureaucrat &bureaucrat);
-
-	// Exceptions
-	class GradeTooLowException : public std::exception
-	{
+class Form {
 	public:
-		GradeTooLowException() throw();
-		GradeTooLowException (const GradeTooLowException&) throw();
-		GradeTooLowException& operator= (const GradeTooLowException&) throw();
-		virtual const char *what() const throw();
-	};
-	class GradeTooHighException : public std::exception
-	{
-	public:
-		GradeTooHighException() throw();
-		GradeTooHighException (const GradeTooHighException&) throw();
-		GradeTooHighException& operator= (const GradeTooHighException&) throw();
-		virtual const char *what() const throw();
-	};
+		// Orthodox Canonical Form
+		Form(str cref name = "Default", int cref signGrade = 75, int cref execGrade = 75);
+		Form(Form cref src);
+		Form ref operator = (Form cref rhs);
+		~Form();
 
-private:
-	const std::string _name;
-	bool _isSigned;
-	const int _signGrade;
-	const int _execGrade;
+		// Methods
+		void beSigned(Bureaucrat ref bureaucrat);
+
+		// Accessors
+		str cref getName() const;
+		bool cref getIsSigned() const;
+		int cref getSignGrade() const;
+		int cref getExecGrade() const;
+		Form ref setName(str cref name);
+		Form ref setSigned(bool cref state);
+		Form ref setSignGrade(int cref signGrade);
+		Form ref setExecGrade(int cref execGrade);
+
+		// Exceptions
+		class GradeTooHighException : public std::exception {
+			public:
+				GradeTooHighException() throw();
+				GradeTooHighException (GradeTooHighException cref) throw();
+				GradeTooHighException ref operator= (GradeTooHighException cref) throw();
+				virtual const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				GradeTooLowException() throw();
+				GradeTooLowException (GradeTooLowException cref) throw();
+				GradeTooLowException ref operator= (GradeTooLowException cref) throw();
+				virtual const char *what() const throw();
+		};
+
+	private:
+		// Attributes
+		const str	_name;
+		bool		_isSigned;
+		const int	_signGrade;
+		const int	_execGrade;
 };
-std::ostream& operator<<(std::ostream& os, Form& form);
-
+std::ostream ref operator<<(std::ostream ref os, Form ref form);
 
 #endif //FORM

@@ -1,57 +1,58 @@
 #ifndef BUREAUCRAT_H
 # define BUREAUCRAT_H
 
-# include <iostream>
-# include <string>
-# include "colors.h"
+# include "utils.h"
 
 class Bureaucrat;
 
 # include "Form.h"
 
-class Bureaucrat
-{
-public:
-	// Orthodox Canonical Form
-	Bureaucrat();
-	Bureaucrat(const std::string &name, const int &grade);
-	Bureaucrat(const Bureaucrat &src);
-	Bureaucrat&operator=(const Bureaucrat &rhs);
-	~Bureaucrat();
-
-	// Accessors
-	const std::string &getName() const;
-	const int &getGrade() const;
-	void changeGrade(const int &amount);
-
-	// Methods
-	void signForm(Form &form);
-
-	// Exceptions
-	class GradeTooHighException : public std::exception
-	{
+class Bureaucrat {
 	public:
-		GradeTooHighException() throw();
-		GradeTooHighException (const GradeTooHighException&) throw();
-		GradeTooHighException& operator= (const GradeTooHighException&) throw();
-		virtual const char *what() const throw();
-	};
-	class GradeTooLowException : public std::exception
-	{
-	public:
-		GradeTooLowException() throw();
-		GradeTooLowException (const GradeTooLowException&) throw();
-		GradeTooLowException& operator= (const GradeTooLowException&) throw();
-		virtual const char *what() const throw();
-	};
+		// Orthodox Canonical Form
+		Bureaucrat(str cref name = "Someone", int cref grade = 75);
+		Bureaucrat(Bureaucrat cref src);
+		Bureaucrat ref operator = (Bureaucrat cref rhs);
+		~Bureaucrat();
 
-private:
-	const std::string _name;
-	int _grade;
+		// Methods
+		void changeGrade(int cref amount);
+		void signForm(Form ref form);
 
-	void _upGrade(const int &amount);
-	void _downGrade(const int &amount);
+		// Accessors
+		str cref getName() const;
+		int cref getGrade() const;
+		Bureaucrat ref setName(str cref name);
+		Bureaucrat ref setGrade(int cref grade);
+
+		// Exceptions
+		class GradeTooHighException : public std::exception
+		{
+			public:
+				GradeTooHighException() throw();
+				GradeTooHighException (GradeTooHighException cref) throw();
+				GradeTooHighException ref operator= (GradeTooHighException cref) throw();
+				virtual const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception
+		{
+			public:
+				GradeTooLowException() throw();
+				GradeTooLowException (GradeTooLowException cref) throw();
+				GradeTooLowException ref operator= (GradeTooLowException cref) throw();
+				virtual const char *what() const throw();
+		};
+
+	private:
+		//	Attributes
+		const std::string _name;
+		int _grade;
+
+		//	Private Methods
+		void _upGrade(int cref amount);
+		void _downGrade(int cref amount);
 };
-std::ostream &operator<<(std::ostream &os, Bureaucrat &bureaucrat);
+
+std::ostream ref operator<<(std::ostream ref os, Bureaucrat cref bureaucrat);
 
 #endif //BUREAUCRAT

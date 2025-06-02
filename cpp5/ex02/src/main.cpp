@@ -14,9 +14,9 @@
 int	main()
 {
 	Bureaucrat signer("signer", 4);
-	Bureaucrat executor("executor", 1);
-	Bureaucrat noob("noob", 150);
-	Bureaucrat pro("pro", 1);
+	const Bureaucrat executor("executor", 1);
+	const Bureaucrat noob("noob", 150);
+	const Bureaucrat pro("pro", 1);
 	AForm *form;
 	for (int i = 0; i < 3; ++i) {
 		switch (i) {
@@ -34,22 +34,21 @@ int	main()
 		}
 		try {
 			noob.executeForm(*form);
-		} catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+		} catch (std::exception ref e) {
+			ERROR e.what() ENDL;
 		}
 		signer.signForm(*form);
 		executor.executeForm(*form);
 		try {
 			noob.executeForm(*form);
-		} catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+		} catch (std::exception ref e) {
+			ERROR e.what() ENDL;
 		}
 		try {
 			pro.executeForm(*form);
-		} catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+		} catch (std::exception ref e) {
+			ERROR e.what() ENDL;
 		}
 		delete form;
-		std::cout << std::endl;
 	}
 }

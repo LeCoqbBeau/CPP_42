@@ -9,15 +9,15 @@ int	main(int argc, char *argv[])
 {
 	if (argc == 1)
 	{
-		std::cout << BPRP"Dont forget to put numbers"CLR << std::endl;
+		PRINT PRP BOLD "Dont forget to put numbers" CENDL;
 		return 0;
 	}
-	Bureaucrat automated("automated", 75);
-	int	change;
+	Bureaucrat automated("automated");
 
-	std::string numptr;
-	bool		isnum;
-	std::cout << automated << std::endl;
+	int		change;
+	str		numptr;
+	bool	isnum;
+	PRINT automated ENDL;
 	for (int i = 1; i < argc; ++i) {
 		numptr = argv[i];
 		isnum = true;
@@ -32,9 +32,10 @@ int	main(int argc, char *argv[])
 			automated.changeGrade(change);
 		}
 		catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
+			ERROR e.what() ENDL;
+			ERROR RED AND automated.getName() AND " grade is now: " CLR AND automated.getGrade() ENDL;
 			continue ;
 		}
-		std::cout << automated << std::endl;
+		PRINT automated ENDL;
 	}
 }

@@ -1,76 +1,88 @@
 #include "Form.h"
 
 // Canonical Orthodox Form
-Form::Form()
-	: _name("Default"), _signGrade(75), _execGrade(75)
+Form::Form(str cref name, int cref signGrade, int cref execGrade)
+	: _name(name),  _isSigned(false), _signGrade(signGrade), _execGrade(execGrade)
 {
-	std::cout << BGRN "Form Default Constructor called" CLR;
-	std::cout << BBLK " [ " << this->_name << " ] " CLR << std::endl;
-	this->_isSigned = false;
-}
-
-Form::Form(const std::string &name, const int &signGrade, const int &execGrade)
-	: _name(name), _signGrade(signGrade), _execGrade(execGrade)
-{
-	std::cout << BGRN "Form Parameterized Constructor called" CLR;
-	std::cout << BBLK " [ " << this->_name << " ] " CLR << std::endl;
+	PRINT GRN BOLD "Form Parameterized Constructor called" CLR;
+	PRINT " [ " AND getName() AND " ] " CENDL;
 	if (signGrade > 150 || execGrade > 150)
 		throw Form::GradeTooLowException();
 	if (signGrade < 1 || execGrade < 1)
 		throw Form::GradeTooHighException();
-	this->_isSigned = false;
 }
 
-Form::Form(const Form &src)
-	: _name(src._name), _signGrade(src._signGrade), _execGrade(src._execGrade)
+Form::Form(Form cref src)
+	: _signGrade(0), _execGrade(0)
 {
-	std::cout << BGRN "Form Copy Constructor called" CLR;
-	std::cout << BBLK " [ from " << src._name << " ] " CLR << std::endl;
-	this->_isSigned = src._isSigned;
+	PRINT GRN BOLD "Form Copy Constructor called" CLR;
+	PRINT " [ from " AND src.getName() AND " ] " CENDL;
+	*this = src;
 }
 
-Form &Form::operator=(const Form &rhs) {
-	std::cout << BGRN "Form Assignment Operator called" CLR;
-	std::cout << BBLK " [ from " << rhs._name << " to " << this->_name << " ] " CLR << std::endl;
-	const_cast<std::string &>(this->_name) = rhs._name;
-	this->_isSigned = rhs._isSigned;
-	const_cast<int &>(this->_signGrade) = rhs._signGrade;
-	const_cast<int &>(this->_execGrade) = rhs._execGrade;
-	return *this;
+Form ref Form::operator = (Form cref rhs) {
+	PRINT GRN BOLD "Form Assignment Operator called" CLR;
+	PRINT " [ from " AND getName() AND " to " AND rhs.getName() AND " ] " CENDL;
+	if (this == &rhs) return (*this);
+	this->	setName(rhs.getName())
+			.setSigned(rhs.getSignGrade())
+			.setSignGrade(rhs.getSignGrade())
+			.setExecGrade(rhs.getExecGrade());
+	return (*this);
 }
 
 Form::~Form() {
-	std::cout << BGRN "Form Destructor called" CLR;
-	std::cout << BBLK " [ " << this->_name << " ] " CLR << std::endl;
+	RPRINT	str(YLW BOLD "Form Destructor called" CLR)
+			.append(" [ ").append(getName()).append(" ] " CLR) ENDL;
 }
 
 // Accessors
-const std::string& Form::getName() const {
-	return this->_name;
+str cref Form::getName() const {
+	return _name;
 }
 
-const bool& Form::getIsSigned() const {
-	return this->_isSigned;
+bool cref Form::getIsSigned() const {
+	return _isSigned;
 }
 
-const int& Form::getSignGrade() const {
-	return this->_signGrade;
+int cref Form::getSignGrade() const {
+	return _signGrade;
 }
 
-const int& Form::getExecGrade() const {
-	return this->_execGrade;
+int cref Form::getExecGrade() const {
+	return _execGrade;
+}
+
+Form ref Form::setName(str cref name) {
+	const_cast<str ref>(_name) = name;
+	return (*this);
+}
+
+Form ref Form::setSigned(bool cref state) {
+	_isSigned = state;
+	return (*this);
+}
+
+Form ref Form::setSignGrade(int cref signGrade) {
+	const_cast<int ref>(_signGrade) = signGrade;
+	return (*this);
+}
+
+Form ref Form::setExecGrade(int cref execGrade) {
+	const_cast<int ref>(_execGrade) = execGrade;
+	return (*this);
 }
 
 //Stream output overload
-std::ostream &operator<<(std::ostream &os, Form &form) {
-	os << CYN << "Form \"" BCYN << form.getName() << CYN "\"";
-	os << ", need grade " BCYN << form.getSignGrade() << CYN " to be signed";
-	os << " and " BCYN << form.getExecGrade() << CYN " to be executed." CLR;
+std::ostream ref operator << (std::ostream ref os, Form cref form) {
+	os AND CYN AND "Form \"" BOLD AND form.getName() AND CLR CYN "\"";
+	os AND ", need grade " BOLD AND form.getSignGrade() AND CLR CYN " to be signed";
+	os AND " and " BOLD AND form.getExecGrade() AND CLR CYN " to be executed." CLR;
 	return (os);
 }
 
 // Methods
-void Form::beSigned(Bureaucrat &bureaucrat) {
+void Form::beSigned(Bureaucrat ref bureaucrat) {
 	if (bureaucrat.getGrade() > this->_signGrade)
 		throw Form::GradeTooLowException();
 	bureaucrat.changeGrade(1);
@@ -78,28 +90,28 @@ void Form::beSigned(Bureaucrat &bureaucrat) {
 }
 
 // Exceptions
-Form::GradeTooLowException::GradeTooLowException() throw() {}
-
-Form::GradeTooLowException::GradeTooLowException(const Form::GradeTooLowException &) throw() {}
-
-Form::GradeTooLowException&
-Form::GradeTooLowException::operator=(const Form::GradeTooLowException &) throw() {
-	return *this;
-}
-
-const char *Form::GradeTooLowException::what() const throw() {
-	return BRED"uhhh apparently, there's a problem with a form... having a too low grade..?"CLR;
-}
-
 Form::GradeTooHighException::GradeTooHighException() throw() {}
 
-Form::GradeTooHighException::GradeTooHighException(const Form::GradeTooHighException &) throw() {}
+Form::GradeTooHighException::GradeTooHighException(Form::GradeTooHighException cref) throw() {}
 
-Form::GradeTooHighException&
-Form::GradeTooHighException::operator=(const Form::GradeTooHighException &) throw() {
-	return *this;
+Form::GradeTooHighException ref
+Form::GradeTooHighException::operator = (Form::GradeTooHighException cref) throw() {
+	return (*this);
 }
 
 const char *Form::GradeTooHighException::what() const throw() {
-	return BRED"This form is too complex to be filled."CLR;
+	return RED BOLD "Bucreaucrat got promoted due to outstanding performance." CLR;
+}
+
+Form::GradeTooLowException::GradeTooLowException() throw() {}
+
+Form::GradeTooLowException::GradeTooLowException(Form::GradeTooLowException cref) throw() {}
+
+Form::GradeTooLowException ref
+Form::GradeTooLowException::operator = (Form::GradeTooLowException cref) throw() {
+	return (*this);
+}
+
+const char *Form::GradeTooLowException::what() const throw() {
+	return RED BOLD "Bucreaucrat got fired due to poor performance." CLR;
 }

@@ -1,41 +1,48 @@
 #include "RobotomyRequestForm.h"
 
 // Canonical Orthodox Form
-RobotomyRequestForm::RobotomyRequestForm() : AForm(ROBOTOMY_NAME, ROBOTOMY_SIGN, ROBOTOMY_EXEC) {
-	std::cout << BGRN "RobotomyRequestForm Default Constructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
+RobotomyRequestForm::RobotomyRequestForm()
+	: AForm(ROBOTOMY_NAME, ROBOTOMY_SIGN, ROBOTOMY_EXEC)
+{
+	PRINT GRN BOLD "RobotomyRequestForm Default Constructor called" CLR;
+	PRINT " [ " AND this AND " ] " CENDL;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const std::string &target) : AForm(ROBOTOMY_NAME, ROBOTOMY_SIGN, ROBOTOMY_EXEC) {
-	std::cout << BGRN "RobotomyRequestForm Parameterized Constructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
-	this->_target = target;
+RobotomyRequestForm::RobotomyRequestForm(str cref target)
+	: AForm(ROBOTOMY_NAME, ROBOTOMY_SIGN, ROBOTOMY_EXEC)
+{
+	PRINT GRN BOLD "RobotomyRequestForm Parameterized Constructor called" CLR;
+	PRINT " [ " AND this AND " ] " CENDL;
+	setTarget(target);
 }
 
-RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &src) : AForm(src) {
-	std::cout << BGRN "RobotomyRequestForm Copy Constructor called" CLR;
-	std::cout << BBLK " [ from " << &src << "to" << this << " ] " CLR << std::endl;
-	this->_target = src._target;
+RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm cref src)
+	: AForm(src)
+{
+	PRINT GRN BOLD "RobotomyRequestForm Copy Constructor called" CLR;
+	PRINT " [ from " AND this AND "to" AND &src AND " ] " CENDL;
+	*this = src;
 }
 
-RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &rhs) {
-	std::cout << BGRN "RobotomyRequestForm Assignment Operator called" CLR;
-	std::cout << BBLK " [ from " << &rhs << "to" << this << " ] " CLR << std::endl;
-	this->_target = rhs._target;
-	return *this;
+RobotomyRequestForm ref RobotomyRequestForm::operator = (RobotomyRequestForm cref rhs) {
+	PRINT GRN BOLD "RobotomyRequestForm Assignment Operator called" CLR;
+	PRINT " [ from " AND this AND "to" AND &rhs AND " ] " CENDL;
+	if (this == &rhs) return (*this);
+	setTarget(rhs.getTarget());
+	return (*this);
 }
 
 RobotomyRequestForm::~RobotomyRequestForm() {
-	std::cout << BGRN "RobotomyRequestForm Destructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
+	RPRINT	str(YLW BOLD "RobotomyRequestForm Destructor called" CLR)
+			.append(" [ ").append(TOSTR(this)).append(" ] " CLR) ENDL;
 }
 
 // Accessors
-const std::string& RobotomyRequestForm::getTarget() const {
+str cref RobotomyRequestForm::getTarget() const {
 	return this->_target;
 }
 
-void RobotomyRequestForm::setTarget(const std::string &target) {
+void RobotomyRequestForm::setTarget(str cref target) {
 	this->_target = target;
 }
 
@@ -43,12 +50,12 @@ void RobotomyRequestForm::setTarget(const std::string &target) {
 void RobotomyRequestForm::_formAction() const {
 	static int	counter = 0;
 
-	std::cout << BYLW "*insert very realistic drilling noises*" CLR << std::endl;
+	PRINT YLW BOLD "*insert very realistic drilling noises*" CENDL;
 	counter++;
-	std::cout << BCYN << _target << CYN " has been ";
+	PRINT CYN BOLD AND getTarget() AND CYN " has been ";
 	if (counter % 2)
-		std::cout << BRED "unsuccessfully";
+		PRINT RED BOLD "unsuccessfully" CLR;
 	else
-		std::cout << BGRN "successfully";
-	std::cout << CYN " robotomized." CLR << std::endl;
+		PRINT GRN BOLD "successfully" CLR;
+	PRINT CYN " robotomized." CENDL;
 }

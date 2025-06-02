@@ -1,68 +1,69 @@
 #ifndef FORM_H
 # define FORM_H
 
-# include <iostream>
-# include <string>
-# include "colors.h"
+# include "utils.h"
 
 class AForm;
 
 # include "Bureaucrat.h"
 
-class AForm
-{
-public:
-	// Orthodox Canonical Form
-	AForm();
-	AForm(const std::string &name, const int &signGrade, const int &execGrade);
-	AForm(const AForm &src);
-	AForm&operator=(const AForm &rhs);
-	virtual ~AForm();
-
-	// Accessors
-	const std::string &getName() const;
-	const bool &getIsSigned() const;
-	const int &getSignGrade() const;
-	const int &getExecGrade() const;
-
-	// Methods
-	void beSigned(Bureaucrat &bureaucrat);
-	void execute(Bureaucrat const & executor) const;
-
-	// Exceptions
-	class GradeTooLowException : public std::exception
-	{
+class AForm {
 	public:
-		GradeTooLowException() throw();
-		GradeTooLowException (const GradeTooLowException&) throw();
-		GradeTooLowException& operator= (const GradeTooLowException&) throw();
-		virtual const char *what() const throw();
-	};
-	class GradeTooHighException : public std::exception
-	{
-	public:
-		GradeTooHighException() throw();
-		GradeTooHighException (const GradeTooHighException&) throw();
-		GradeTooHighException& operator= (const GradeTooHighException&) throw();
-		virtual const char *what() const throw();
-	};
-	class FormNotSignedException : public std::exception
-	{
-	public:
-		FormNotSignedException() throw();
-		FormNotSignedException (const FormNotSignedException&) throw();
-		FormNotSignedException& operator= (const FormNotSignedException&) throw();
-		virtual const char *what() const throw();
-	};
+		// Orthodox Canonical Form
+		AForm(str cref name = "Default", int cref signGrade = 75, int cref execGrade = 75);
+		AForm(AForm cref src);
+		AForm ref operator = (AForm cref rhs);
+		virtual ~AForm();
 
-private:
-	const std::string _name;
-	bool _isSigned;
-	const int _signGrade;
-	const int _execGrade;
-	virtual void _formAction() const = 0;
+		// Methods
+		void beSigned(Bureaucrat ref bureaucrat);
+		void execute(Bureaucrat cref executor) const;
+
+		// Accessors
+		str cref getName() const;
+		bool cref getIsSigned() const;
+		int cref getSignGrade() const;
+		int cref getExecGrade() const;
+		AForm ref setName(str cref name);
+		AForm ref setSigned(bool cref state);
+		AForm ref setSignGrade(int cref signGrade);
+		AForm ref setExecGrade(int cref execGrade);
+
+		// Exceptions
+		class GradeTooHighException : public std::exception {
+			public:
+				GradeTooHighException() throw();
+				GradeTooHighException (GradeTooHighException cref) throw();
+				GradeTooHighException ref operator= (GradeTooHighException cref) throw();
+				virtual const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				GradeTooLowException() throw();
+				GradeTooLowException (GradeTooLowException cref) throw();
+				GradeTooLowException ref operator= (GradeTooLowException cref) throw();
+				virtual const char *what() const throw();
+		};
+		class FormNotSignedException : public std::exception {
+			public:
+				FormNotSignedException() throw();
+				FormNotSignedException (FormNotSignedException cref) throw();
+				FormNotSignedException ref operator= (FormNotSignedException cref) throw();
+				virtual const char *what() const throw();
+		};
+
+	private:
+		// Attributes
+		const str	_name;
+		bool		_isSigned;
+		const int	_signGrade;
+		const int	_execGrade;
+
+		// Pure virtual method
+		virtual void _formAction() const = 0;
 };
-std::ostream& operator<<(std::ostream& os, AForm& form);
+std::ostream ref operator<<(std::ostream ref os, AForm ref form);
 
 
 #endif //FORM
+

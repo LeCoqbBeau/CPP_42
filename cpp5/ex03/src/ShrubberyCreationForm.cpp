@@ -2,40 +2,41 @@
 
 // Canonical Orthodox Form
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm(SHRUBBERY_NAME, SHRUBBERY_SIGN, SHRUBBERY_EXEC) {
-	std::cout << BGRN "ShrubberyCreationForm Default Constructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
+	PRINT GRN BOLD "ShrubberyCreationForm Default Constructor called" CLR;
+	PRINT " [ " AND this AND " ] " CENDL;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm(SHRUBBERY_NAME, SHRUBBERY_SIGN, SHRUBBERY_EXEC) {
-	std::cout << BGRN "ShrubberyCreationForm Parameterized Constructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
+ShrubberyCreationForm::ShrubberyCreationForm(str cref target) : AForm(SHRUBBERY_NAME, SHRUBBERY_SIGN, SHRUBBERY_EXEC) {
+	PRINT GRN BOLD "ShrubberyCreationForm Parameterized Constructor called" CLR;
+	PRINT " [ " AND this AND " ] " CENDL;
 	this->_target = target;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &src) : AForm(src) {
-	std::cout << BGRN "ShrubberyCreationForm Copy Constructor called" CLR;
-	std::cout << BBLK " [ from " << &src << "to" << this << " ] " CLR << std::endl;
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm cref src) : AForm(src) {
+	PRINT GRN BOLD "ShrubberyCreationForm Copy Constructor called" CLR;
+	PRINT " [ from " AND &src AND "to" AND this AND " ] " CENDL;
 	this->_target = src._target;
 }
 
-ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm &rhs) {
-	std::cout << BGRN "ShrubberyCreationForm Assignment Operator called" CLR;
-	std::cout << BBLK " [ from " << &rhs << "to" << this << " ] " CLR << std::endl;
+ShrubberyCreationForm ref ShrubberyCreationForm::operator = (ShrubberyCreationForm cref rhs) {
+	PRINT GRN BOLD "ShrubberyCreationForm Assignment Operator called" CLR;
+	PRINT " [ from " AND &rhs AND "to" AND this AND " ] " CENDL;
+	if (this == &rhs) return (*this);
 	this->_target = rhs._target;
 	return *this;
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {
-	std::cout << BGRN "ShrubberyCreationForm Destructor called" CLR;
-	std::cout << BBLK " [ " << this << " ] " CLR << std::endl;
+	RPRINT	str(YLW BOLD "ShrubberyCreationForm Destructor called" CLR)
+			.append(" [ ").append(TOSTR(this)).append(" ] " CLR) ENDL;
 }
 
 // Accessors
-const std::string& ShrubberyCreationForm::getTarget() const {
+str cref ShrubberyCreationForm::getTarget() const {
 	return this->_target;
 }
 
-void ShrubberyCreationForm::setTarget(const std::string &target) {
+void ShrubberyCreationForm::setTarget(str cref target) {
 	this->_target = target;
 }
 
@@ -48,23 +49,22 @@ void ShrubberyCreationForm::_formAction() const {
 	fileStream.open(filePath.c_str());
 	if (!fileStream.is_open())
 		throw ShrubberyCreationForm::FileNotOpened();
-	int	num;
 
-	srand(std::time(__nullptr));
-	num = 1 + rand() % 9;
+	std::srand(std::time(__nullptr));
+	const int num = 1 + std::rand() % 9;
 	for (int i = 0; i < num; ++i) {
-		fileStream << std::endl;
-		fileStream << "     ccee88oo"			<< std::endl;
-		fileStream << "  C8O8O8Q8PoOb o8oo"		<< std::endl;
-		fileStream << " dOB69QO8PdUOpugoO9bD"	<< std::endl;
-		fileStream << "CgggbU8OU qOp qOdoUOdcb"	<< std::endl;
-		fileStream << "    6OuU  /p u gcoUodpP"	<< std::endl;
-		fileStream << "      \\\\\\//  /douUP"	<< std::endl;
-		fileStream << "        \\\\\\////"		<< std::endl;
-		fileStream << "         |||/\\"			<< std::endl;
-		fileStream << "         |||\\/"			<< std::endl;
-		fileStream << "         |||||"			<< std::endl;
-		fileStream << "   .....//||||\\...."	<< std::endl;
+		fileStream ENDL;
+		fileStream AND "     ccee88oo"				ENDL;
+		fileStream AND "  C8O8O8Q8PoOb o8oo"		ENDL;
+		fileStream AND " dOB69QO8PdUOpugoO9bD"		ENDL;
+		fileStream AND "CgggbU8OU qOp qOdoUOdcb"	ENDL;
+		fileStream AND "    6OuU  /p u gcoUodpP"	ENDL;
+		fileStream AND "      \\\\\\//  /douUP"		ENDL;
+		fileStream AND "        \\\\\\////"			ENDL;
+		fileStream AND "         |||/\\"			ENDL;
+		fileStream AND "         |||\\/"			ENDL;
+		fileStream AND "         |||||"				ENDL;
+		fileStream AND "   .....//||||\\...."		ENDL;
 	}
 	fileStream.close();
 }
@@ -72,15 +72,15 @@ void ShrubberyCreationForm::_formAction() const {
 // Exceptions
 ShrubberyCreationForm::FileNotOpened::FileNotOpened() throw() {}
 
-ShrubberyCreationForm::FileNotOpened::FileNotOpened(const ShrubberyCreationForm::FileNotOpened &) throw() {}
+ShrubberyCreationForm::FileNotOpened::FileNotOpened(ShrubberyCreationForm::FileNotOpened cref) throw() {}
 
-ShrubberyCreationForm::FileNotOpened &
-ShrubberyCreationForm::FileNotOpened::operator=(const ShrubberyCreationForm::FileNotOpened &) throw() {
+ShrubberyCreationForm::FileNotOpened ref
+ShrubberyCreationForm::FileNotOpened::operator=(ShrubberyCreationForm::FileNotOpened cref) throw() {
 	return *this;
 }
 
 ShrubberyCreationForm::FileNotOpened::~FileNotOpened() throw() {}
 
 const char *ShrubberyCreationForm::FileNotOpened::what() const throw() {
-	return BRED"Shrubbery Creation Form does not have a valid permission form"CLR;
+	return RED BOLD "Shrubbery Creation Form does not have a valid permission form" CLR;
 }

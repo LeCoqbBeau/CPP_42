@@ -1,47 +1,43 @@
 #ifndef SHRUBBERYCREATIONFORM_H
 # define SHRUBBERYCREATIONFORM_H
 
-# include <iostream>
-# include <string>
+# include "utils.h"
+# include "AForm.h"
+
 # include <fstream>
 # include <cstdlib>
 # include <ctime>
-# include "AForm.h"
-# include "colors.h"
 
 # define SHRUBBERY_NAME "Shrubbery Creation"
 # define SHRUBBERY_SIGN 145
 # define SHRUBBERY_EXEC 137
 
-class ShrubberyCreationForm : public AForm
-{
-public:
-	// Orthodox Canonical Form
-	ShrubberyCreationForm();
-	ShrubberyCreationForm(const std::string &target);
-	ShrubberyCreationForm(const ShrubberyCreationForm &src);
-	ShrubberyCreationForm&operator=(const ShrubberyCreationForm &rhs);
-	~ShrubberyCreationForm();
-
-	// Accessors
-	const std::string &getTarget() const;
-	void setTarget(const std::string &target);
-
-	// Exceptions
-	class FileNotOpened : public std::exception
-	{
+class ShrubberyCreationForm : public AForm {
 	public:
-		FileNotOpened() throw();
-		FileNotOpened(const FileNotOpened &) throw();
-		FileNotOpened& operator = (const FileNotOpened &) throw();
-		~FileNotOpened() throw();
-		const char *what() const throw();
-	};
+		// Orthodox Canonical Form
+		ShrubberyCreationForm();
+		ShrubberyCreationForm(str cref target = "Default");
+		ShrubberyCreationForm(ShrubberyCreationForm cref src);
+		ShrubberyCreationForm ref operator = (ShrubberyCreationForm cref rhs);
+		~ShrubberyCreationForm();
 
-private:
-	std::string _target;
-	void _formAction() const;
+		// Accessors
+		str cref getTarget() const;
+		void setTarget(str cref target);
 
+		// Exceptions
+		class FileNotOpened : public std::exception {
+			public:
+				FileNotOpened() throw();
+				FileNotOpened(FileNotOpened cref) throw();
+				FileNotOpened ref operator = (FileNotOpened cref) throw();
+				~FileNotOpened() throw();
+				const char *what() const throw();
+		};
+
+	private:
+		str _target;
+		void _formAction() const;
 };
 
 #endif //SHRUBBERYCREATIONFORM

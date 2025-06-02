@@ -16,28 +16,28 @@ int	main()
 	Bureaucrat Pro("Pro", 20);
 	Bureaucrat Hacker("Hacker", 1);
 
-	std::cout << std::endl;
+	NEWL;
 	Noob.signForm(Weak);
+	Good.signForm(Weak);
 	Good.signForm(Weak);
 	Good.signForm(Strong);
 	Pro.signForm(Strong);
 	Pro.signForm(Best);
 	try {
 		Hacker.signForm(Best);
-	} catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+	} catch (std::exception ref e) {
+		ERROR e.what() ENDL;
 	}
-	std::cout << std::endl;
+	NEWL;
 
 	Bureaucrat Sneaky("Sneaky", 149);
 	Sneaky = Noob;
 
-	std::cout << std::endl;
+	NEWL;
 	try {
 		Best.beSigned(Sneaky);
-	} catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+	} catch (std::exception ref e) {
+		ERROR e.what() ENDL;
 	}
-
-	std::cout << std::endl;
+	NEWL;
 }

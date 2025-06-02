@@ -1,32 +1,29 @@
 #ifndef ROBOTOMYREQUESTFORM_H
 # define ROBOTOMYREQUESTFORM_H
 
-# include <iostream>
-# include <string>
+# include "utils.h"
 # include "AForm.h"
-# include "colors.h"
 
 # define ROBOTOMY_NAME "Robotomy Request"
 # define ROBOTOMY_SIGN 145
 # define ROBOTOMY_EXEC 137
 
-class RobotomyRequestForm : public AForm
-{
-public:
-	// Orthodox Canonical Form
-	RobotomyRequestForm();
-	RobotomyRequestForm(const std::string &target);
-	RobotomyRequestForm(const RobotomyRequestForm &src);
-	RobotomyRequestForm&operator=(const RobotomyRequestForm &rhs);
-	~RobotomyRequestForm();
+class RobotomyRequestForm : public AForm {
+	public:
+		// Orthodox Canonical Form
+		RobotomyRequestForm();
+		RobotomyRequestForm(str cref target = "Default");
+		RobotomyRequestForm(RobotomyRequestForm cref src);
+		RobotomyRequestForm&operator=(RobotomyRequestForm cref rhs);
+		~RobotomyRequestForm();
 
-	// Accessors
-	const std::string &getTarget() const;
-	void setTarget(const std::string &target);
+		// Accessors
+		str cref getTarget() const;
+		void setTarget(str cref target);
 
-private:
-	std::string _target;
-	void _formAction() const;
+	private:
+		str _target;
+		void _formAction() const;
 };
 
 #endif //ROBOTOMYREQUESTFORM
