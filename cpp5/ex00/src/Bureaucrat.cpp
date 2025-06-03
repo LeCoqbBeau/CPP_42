@@ -71,7 +71,7 @@ void Bureaucrat::_downGrade(int cref amount) {
 }
 
 // Stream Output overload
-std::ostream &operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) {
+std::ostream ref operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) {
 	os	AND CYN BOLD AND bureaucrat.getName()
 		AND CLR CYN ", got " CYN BOLD AND bureaucrat.getGrade() AND CLR CYN " out of 150." CLR;
 	return os;

@@ -30,8 +30,9 @@ int	main()
 				form = new RobotomyRequestForm("Bob");
 				break;
 			default:
-				throw ;
+				return 0;
 		}
+		PRINT *form ENDL;
 		try {
 			noob.executeForm(*form);
 		} catch (std::exception ref e) {

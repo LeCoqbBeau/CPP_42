@@ -40,6 +40,6 @@ void PresidentialPardonForm::setTarget(str cref target) {
 }
 
 // Methods
-void PresidentialPardonForm::_formAction() const {
+void PresidentialPardonForm::_formAction() const throw() {
 	PRINT CYN BOLD AND _target AND CLR CYN " has been pardoned by " CLR BOLD "Zaphod Beeblebrox" CYN "." CENDL;
 }

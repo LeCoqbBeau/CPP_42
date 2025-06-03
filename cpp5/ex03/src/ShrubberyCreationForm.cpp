@@ -41,14 +41,16 @@ void ShrubberyCreationForm::setTarget(str cref target) {
 }
 
 // Methods
-void ShrubberyCreationForm::_formAction() const {
-	std::string filePath;
+void ShrubberyCreationForm::_formAction() const throw() {
+	str filePath;
 	std::ofstream fileStream;
 
 	filePath = _target + "_shrubbery";
 	fileStream.open(filePath.c_str());
-	if (!fileStream.is_open())
-		throw ShrubberyCreationForm::FileNotOpened();
+	if (!fileStream.is_open()) {
+		ERROR RGB(224, 131, 7) "Failed to open " + filePath CENDL;
+		return ;
+	}
 
 	std::srand(std::time(__nullptr));
 	const int num = 1 + std::rand() % 9;
@@ -67,20 +69,4 @@ void ShrubberyCreationForm::_formAction() const {
 		fileStream AND "   .....//||||\\...."		ENDL;
 	}
 	fileStream.close();
-}
-
-// Exceptions
-ShrubberyCreationForm::FileNotOpened::FileNotOpened() throw() {}
-
-ShrubberyCreationForm::FileNotOpened::FileNotOpened(ShrubberyCreationForm::FileNotOpened cref) throw() {}
-
-ShrubberyCreationForm::FileNotOpened ref
-ShrubberyCreationForm::FileNotOpened::operator=(ShrubberyCreationForm::FileNotOpened cref) throw() {
-	return *this;
-}
-
-ShrubberyCreationForm::FileNotOpened::~FileNotOpened() throw() {}
-
-const char *ShrubberyCreationForm::FileNotOpened::what() const throw() {
-	return RED BOLD "Shrubbery Creation Form does not have a valid permission form" CLR;
 }

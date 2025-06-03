@@ -60,9 +60,9 @@ class AForm {
 		const int	_execGrade;
 
 		// Pure virtual method
-		virtual void _formAction() const = 0;
+		virtual void _formAction() const throw() = 0;
 };
-std::ostream ref operator<<(std::ostream ref os, AForm ref form);
+std::ostream ref operator << (std::ostream ref os, AForm cref form);
 
 
 #endif //FORM

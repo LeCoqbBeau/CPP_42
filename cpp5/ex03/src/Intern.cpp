@@ -14,20 +14,20 @@ Intern::Intern() {
 
 Intern::Intern(Intern cref src) {
 	PRINT GRN BOLD "Intern Copy Constructor called" CLR;
-	PRINT " [ from " AND this AND "to" AND &src AND " ] " CENDL;
+	PRINT " [ from " AND this AND " to " AND &src AND " ] " CENDL;
 	*this = src;
 }
 
 Intern ref Intern::operator = (Intern cref rhs) {
 	PRINT GRN BOLD "Intern Assignment Operator called" CLR;
-	PRINT " [ from " AND this AND "to" AND &rhs AND " ] " CENDL;
+	PRINT " [ from " AND this AND " to " AND &rhs AND " ] " CENDL;
 	if (this == &rhs) return (*this);
 	return *this;
 }
 
 Intern::~Intern() {
-	PRINT GRN BOLD "Intern Destructor called" CLR;
-	PRINT " [ " AND this AND " ] " CENDL;
+	RPRINT YLW BOLD "Intern Destructor called" CLR
+			" [ " AND this AND " ] " CENDL;
 }
 
 // Public Methods
@@ -46,14 +46,15 @@ AForm *Intern::makeForm(str cref name, str cref target) {
 			form = new RobotomyRequestForm(target);
 			break;
 		default:
-			throw Intern::UnknownForm();
+			form = __nullptr;
+			break;
 	}
 	_printCreation(type);
 	return form;
 }
 
 // Private Methods
-t_form Intern::_identifyForm(const std::string &name) {
+t_form Intern::_identifyForm(str cref name) {
 	for (int i = 0; i < E_FORM_END; ++i) {
 		if (name == formNames[i])
 			return (static_cast<t_form>(i));
@@ -78,19 +79,4 @@ void Intern::_printCreation(const t_form form) {
 			break;
 	}
 	PRINT "" CENDL;
-}
-
-// Exceptions
-Intern::UnknownForm::UnknownForm() throw() {}
-
-Intern::UnknownForm::UnknownForm(Intern::UnknownForm cref) throw() {}
-
-Intern::UnknownForm ref Intern::UnknownForm::operator = (Intern::UnknownForm cref) throw() {
-	return *this;
-}
-
-Intern::UnknownForm::~UnknownForm() throw() {}
-
-const char *Intern::UnknownForm::what() const throw() {
-	return RED BOLD "Intern couldn't make the form, what a useful intern..." CLR;
 }

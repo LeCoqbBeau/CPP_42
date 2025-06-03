@@ -10,6 +10,11 @@ int	main()
 	Form Mid("Mid", 75, 75);
 	Form Strong("Strong", 30, 30);
 	Form Best("Best", 1, 1);
+	
+	PRINT Weak ENDL;
+	PRINT Mid ENDL;
+	PRINT Strong ENDL;
+	PRINT Best ENDL;
 
 	Bureaucrat Noob("Noob", 150);
 	Bureaucrat Good("Good", 60);

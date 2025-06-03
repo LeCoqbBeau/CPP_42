@@ -42,13 +42,15 @@ void ShrubberyCreationForm::setTarget(str cref target) {
 
 // Methods
 void ShrubberyCreationForm::_formAction() const {
-	std::string filePath;
+	str filePath;
 	std::ofstream fileStream;
 
 	filePath = _target + "_shrubbery";
 	fileStream.open(filePath.c_str());
-	if (!fileStream.is_open())
-		throw ShrubberyCreationForm::FileNotOpened();
+	if (!fileStream.is_open()) {
+		ERROR RGB(224, 131, 7) "Failed to open " + filePath CENDL;
+		return ;
+	}
 
 	std::srand(std::time(__nullptr));
 	const int num = 1 + std::rand() % 9;

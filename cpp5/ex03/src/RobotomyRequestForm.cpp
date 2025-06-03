@@ -47,7 +47,7 @@ void RobotomyRequestForm::setTarget(str cref target) {
 }
 
 // Methods
-void RobotomyRequestForm::_formAction() const {
+void RobotomyRequestForm::_formAction() const throw() {
 	static int	counter = 0;
 
 	PRINT YLW BOLD "*insert very realistic drilling noises*" CENDL;

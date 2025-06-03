@@ -22,7 +22,7 @@ class PresidentialPardonForm : public AForm {
 
 	private:
 		str _target;
-		void _formAction() const;
+		void _formAction() const throw();
 };
 
 #endif //PRESIDENTIALPARDONFORM

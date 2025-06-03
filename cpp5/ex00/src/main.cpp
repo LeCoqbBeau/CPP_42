@@ -25,13 +25,15 @@ int	main(int argc, char *argv[])
 			if (!isdigit(*it) && *it != '-' && *it != '+')
 				isnum = false;
 		}
-		if (!isnum)
+		if (!isnum) {
+			ERROR RGB(224, 131, 7) "Invalid input: " CLR AND numptr ENDL;
 			continue;
+		}
 		change = std::atoi(argv[i]);
 		try {
 			automated.changeGrade(change);
 		}
-		catch (std::exception &e) {
+		catch (std::exception ref e) {
 			ERROR e.what() ENDL;
 			ERROR RED AND automated.getName() AND " grade is now: " CLR AND automated.getGrade() ENDL;
 			continue ;

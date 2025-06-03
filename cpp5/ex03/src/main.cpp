@@ -18,6 +18,7 @@ int	main()
 	for (int i = 0; i < E_FORM_END; ++i) {
 		name = Intern::formNames[i];
 		form = bob.makeForm(name, "bob");
+		PRINT *form ENDL;
 		goat.signForm(*form);
 		goat.executeForm(*form);
 		delete form;

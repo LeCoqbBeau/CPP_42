@@ -46,7 +46,7 @@ class Bureaucrat {
 
 	private:
 		//	Attributes
-		const std::string _name;
+		const str _name;
 		int _grade;
 
 		//	Private Methods
@@ -54,6 +54,6 @@ class Bureaucrat {
 		void _downGrade(int cref amount);
 };
 
-std::ostream ref operator<<(std::ostream ref os, Bureaucrat cref bureaucrat);
+std::ostream ref operator << (std::ostream ref os, Bureaucrat cref bureaucrat);
 
 #endif //BUREAUCRAT

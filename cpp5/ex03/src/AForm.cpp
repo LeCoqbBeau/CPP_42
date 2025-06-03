@@ -78,8 +78,8 @@ std::ostream ref operator << (std::ostream ref os, AForm cref form) {
 	os AND CYN AND "AForm \"" BOLD AND form.getName() AND CLR CYN "\"";
 	os AND ", need grade " BOLD AND form.getSignGrade() AND CLR CYN " to be signed,";
 	os AND (form.getIsSigned()
-			? " is signed "
-			: " but is signed, ");
+			? " is signed"
+			: " but isn't signed,");
 	os AND " and " BOLD AND form.getExecGrade() AND CLR CYN " to be executed." CLR;
 	return (os);
 }
@@ -92,7 +92,7 @@ void AForm::beSigned(Bureaucrat ref bureaucrat) {
 	setSigned(true);
 }
 
-void AForm::execute(const Bureaucrat &executor) const {
+void AForm::execute(Bureaucrat cref executor) const {
 	if (!getIsSigned())
 		throw AForm::FormNotSignedException();
 	if (executor.getGrade() > getExecGrade())

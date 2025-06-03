@@ -25,19 +25,9 @@ class ShrubberyCreationForm : public AForm {
 		str cref getTarget() const;
 		void setTarget(str cref target);
 
-		// Exceptions
-		class FileNotOpened : public std::exception {
-			public:
-				FileNotOpened() throw();
-				FileNotOpened(FileNotOpened cref) throw();
-				FileNotOpened ref operator = (FileNotOpened cref) throw();
-				~FileNotOpened() throw();
-				const char *what() const throw();
-		};
-
 	private:
 		str _target;
-		void _formAction() const;
+		void _formAction() const throw();
 };
 
 #endif //SHRUBBERYCREATIONFORM

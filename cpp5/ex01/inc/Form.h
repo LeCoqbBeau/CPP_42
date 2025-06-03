@@ -51,6 +51,6 @@ class Form {
 		const int	_signGrade;
 		const int	_execGrade;
 };
-std::ostream ref operator<<(std::ostream ref os, Form ref form);
+std::ostream ref operator << (std::ostream ref os, Form cref form);
 
 #endif //FORM

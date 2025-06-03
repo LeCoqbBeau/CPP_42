@@ -14,13 +14,13 @@ Bureaucrat::Bureaucrat(str cref name, int cref grade)
 
 Bureaucrat::Bureaucrat(Bureaucrat cref src) {
 	PRINT GRN BOLD "Bureaucrat Copy Constructor called" CLR;
-	PRINT " [ from " AND src.getName() AND " ] " CENDL;
+	PRINT " [ from " AND src.getName() AND " to " AND src.getName() AND " ] " CENDL;
 	*this = src;
 }
 
 Bureaucrat ref Bureaucrat::operator = (Bureaucrat cref rhs) {
 	PRINT GRN BOLD "Bureaucrat Assignment Operator called" CLR;
-	PRINT " [ from " AND getName() AND "to" AND rhs.getName() AND " ] " CENDL;
+	PRINT " [ from " AND getName() AND " to " AND rhs.getName() AND " ] " CENDL;
 	if (this == &rhs) return (*this);
 	this->setName(rhs.getName()).setGrade(rhs.getGrade());
 	return (*this);
@@ -43,7 +43,7 @@ void Bureaucrat::signForm(AForm ref form) {
 	if (form.getIsSigned())
 	{
 		PRINT PRP "Bureaucrat " PRP BOLD AND this->_name AND PRP " couldn't sign form \"";
-		PRINT PRP BOLD AND form.getName() AND PRP"\" because ";
+		PRINT PRP BOLD AND form.getName() AND PRP "\" because ";
 		PRINT "it is already signed." ENDL;
 		return ;
 	}
@@ -59,7 +59,7 @@ void Bureaucrat::signForm(AForm ref form) {
 	PRINT CYN BOLD AND form.getName() AND CYN"\"." ENDL;
 }
 
-void Bureaucrat::executeForm(const AForm &form) const {
+void Bureaucrat::executeForm(AForm cref form) const {
 	if (!form.getIsSigned())
 	{
 		PRINT PRP "Bureaucrat " BOLD AND this->getName() AND CLR PRP " cant follow the procedure for form \"";
@@ -113,7 +113,7 @@ void Bureaucrat::_downGrade(int cref amount) {
 }
 
 // Stream Output overload
-std::ostream &operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) {
+std::ostream ref operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) {
 	os	AND CYN BOLD AND bureaucrat.getName()
 		AND CLR CYN ", got " CYN BOLD AND bureaucrat.getGrade() AND CLR CYN " out of 150." CLR;
 	return os;

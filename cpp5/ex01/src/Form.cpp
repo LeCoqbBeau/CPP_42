@@ -76,7 +76,10 @@ Form ref Form::setExecGrade(int cref execGrade) {
 //Stream output overload
 std::ostream ref operator << (std::ostream ref os, Form cref form) {
 	os AND CYN AND "Form \"" BOLD AND form.getName() AND CLR CYN "\"";
-	os AND ", need grade " BOLD AND form.getSignGrade() AND CLR CYN " to be signed";
+	os AND ", need grade " BOLD AND form.getSignGrade() AND CLR CYN " to be signed,";
+	os AND (form.getIsSigned()
+			? " is signed"
+			: " but isn't signed,");
 	os AND " and " BOLD AND form.getExecGrade() AND CLR CYN " to be executed." CLR;
 	return (os);
 }
