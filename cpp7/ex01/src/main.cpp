@@ -2,11 +2,8 @@
 // Created by mscheman on 8/16/24.
 //
 
-#include <iostream>
-
+#include "utils.h"
 #include "iter.h"
-#include "colors.h"
-#include "printUtils.h"
 
 typedef enum e_zone {
 	ALPHA = 0,
@@ -18,17 +15,20 @@ typedef enum e_zone {
 }	t_zone;
 
 typedef struct s_drill {
-	inline s_drill(t_zone zone, size_t veinDensity, const std::string &ore)
-	: sector(zone), output(veinDensity), type(ore) {};
-	t_zone		sector;
-	size_t		output;
-	std::string	type;
+	// Constructor
+	inline s_drill(const t_zone zone, const size_t veinDensity, str cref ore)
+		: sector(zone), output(veinDensity), type(ore) {};
+
+	// Attributes
+	t_zone	sector;
+	size_t	output;
+	str		type;
 }	t_drill;
 
 static void printZone(t_zone zone);
-static std::string zoneToStr(t_zone zone);
+static str zoneToStr(t_zone zone);
 
-static void printDrill(const t_drill &drill);
+static void printDrill(t_drill cref drill);
 
 int main() {
 	t_zone availableZone[] = {
@@ -53,23 +53,23 @@ int main() {
 	};
 
 	NEWL;
-	PRINT BPRP "-----[ Initiating Advanced Mining Zone Analysis ]-----" CLR ENDL;
+	PRINT PRP BOLD "-----[ Initiating Advanced Mining Zone Analysis ]-----" CENDL;
 	NEWL;
-	PRINT PRP " Now listing all producing sectors:" CLR ENDL;
+	PRINT PRP " Now listing all producing sectors:" CENDL;
 	::iter(availableZone, 5, printZone);
 	NEWL;
-	PRINT PRP " Now examining all drills on all zones:" CLR ENDL;
+	PRINT PRP " Now examining all drills on all zones:" CENDL;
 	::iter(workingDrills, 10, printDrill);
 	NEWL;
-	PRINT BPRP "-----[ Terminated Advanced Mining Zone Analysis ]-----" CLR ENDL;
+	PRINT PRP BOLD "-----[ Terminated Advanced Mining Zone Analysis ]-----" CENDL;
 	NEWL;
 }
 
-static void printZone(t_zone zone) {
+static void printZone(const t_zone zone) {
 	PRINT TAB "- " AND zoneToStr(zone) ENDL;
 }
 
-static std::string zoneToStr(t_zone zone) {
+static std::string zoneToStr(const t_zone zone) {
 	switch (zone) {
 		case ALPHA:
 			return "ALPHA";
@@ -83,13 +83,15 @@ static std::string zoneToStr(t_zone zone) {
 			return "ECHO";
 		case E_ZONE_END:
 			return "UNKNOWN";
+		default:
+			return "HOLY JESUS";
 	}
 }
 
-static void printDrill(const t_drill &drill) {
+static void printDrill(t_drill cref drill) {
 	PRINT TAB;
-	PRINT BYLW "Drill on " CLR AND zoneToStr(drill.sector);
-	PRINT BYLW " producing " CLR AND  drill.output AND " " AND drill.type ;
-	PRINT BYLW "/day." CLR;
+	PRINT YLW BOLD "Drill on " CLR AND zoneToStr(drill.sector);
+	PRINT YLW BOLD " producing " CLR AND drill.output AND " " AND drill.type ;
+	PRINT YLW BOLD "/day." CLR;
 	NEWL;
 }

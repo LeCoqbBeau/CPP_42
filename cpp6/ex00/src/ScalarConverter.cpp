@@ -4,63 +4,69 @@
 
 #include "ScalarConverter.h"
 
-static bool printPseudoLitteral(const std::string &input);
+// Static member prototypes
+static bool printPseudoLiteral(str cref input);
+static bool isValidNum(str cref input);
+static void charPrint(char c, bool undisplayable=false);
+static bool isFloatInteger(float f);
+static bool isCharPrintable(bool isInteger, int value);
+static void intPrint(int i, bool undisplayable=false);
+static void floatPrint(float f, bool undisplayable=false);
+static void doublePrint(double d);
 
-void Serialize::convert(const std::string& input)
+// Static public method
+void ScalarConverter::convert(str cref input)
 {
-	if (printPseudoLitteral(input))
+	if (printPseudoLiteral(input))
 		return ;
 
-	t_type litteralType = Serialize::identify(input);
+	t_type litteralType = ScalarConverter::_identify(input);
 	if (litteralType == E_TYPE_END) {
-		ERROR BRED "wrong inputs in 2024 is crazy :skull:" ENDL;
+		ERROR RED BOLD "wrong inputs in 2024 is crazy :skull:" ENDL;
 		return ;
 	}
 
-	void *data = Serialize::convert(input, litteralType);
+	void *data = ScalarConverter::_convert(input, litteralType);
 	if (data == 0) {
-		ERROR BRED "i am NOT cooking this input" ENDL;
+		ERROR RED BOLD "i am NOT cooking this input" ENDL;
 		return ;
 	}
 
-	Serialize::print(data, litteralType);
+	ScalarConverter::_print(data, litteralType);
 
 	VOIDDEL (data);
 }
 
 // Canonical Orthodox Form
-Serialize::Serialize() {}
+ScalarConverter::ScalarConverter() {}
 
-Serialize::Serialize(const Serialize& rhs) {
+ScalarConverter::ScalarConverter(ScalarConverter cref rhs) {
 	(void)rhs;
 }
 
-Serialize Serialize::operator=(const Serialize& rhs) {
+ScalarConverter ref ScalarConverter::operator = (ScalarConverter cref rhs) {
 	(void)rhs;
 	return (*this);
 }
 
-Serialize::~Serialize() {}
+ScalarConverter::~ScalarConverter() {}
 
 // Methods
-static bool isValidNum(const std::string &input);
-
-t_type Serialize::identify(const std::string& input) {
-	if (input.find_first_of(LOWER_ALPHABET UPPER_ALPHABET) != std::string::npos
-		&& input.length() == 1)
+t_type ScalarConverter::_identify(str cref input) {
+	if (input.length() == 1)
 		return CHAR;
 	if (!isValidNum(input))
 		return E_TYPE_END;
-	if (input.find('.') == std::string::npos)
+	if (input.find('.') == str::npos)
 		return INT;
-	if (input.find('f') != std::string::npos)
+	if (input.find('f') != str::npos)
 		return FLOAT;
 	return DOUBLE;
 }
 
-static bool isValidNum(const std::string &input) {
-	std::string::const_iterator it = input.begin();
-	bool						isInteger = true;
+static bool isValidNum(str cref input) {
+	str::const_iterator	it = input.begin();
+	bool				isInteger = true;
 
 	if (*it == '+' || *it == '-')
 		++it;
@@ -76,8 +82,7 @@ static bool isValidNum(const std::string &input) {
 	return true;
 }
 
-void* Serialize::convert(const std::string& input, t_type type)
-{
+void *ScalarConverter::_convert(str cref input, const t_type type) {
 	void *data;
 	char charData;
 	long integerData;
@@ -119,15 +124,7 @@ void* Serialize::convert(const std::string& input, t_type type)
 	return data;
 }
 
-static void charPrint(char c, bool undisplayable=false);
-static bool isFloatInteger(float f);
-static bool isCharPrintable(bool isInteger, int value);
-static void intPrint(int i, bool undisplayable=false);
-static void floatPrint(float f, bool undisplayable=false);
-static void doublePrint(double d);
-
-void Serialize::print(void *value, t_type type)
-{
+void ScalarConverter::_print(void *value, const t_type type) {
 	char charValue;
 	int intValue;
 	float floatValue;
@@ -173,45 +170,41 @@ void Serialize::print(void *value, t_type type)
 	}
 }
 
-static bool printPseudoLitteral(const std::string &input) {
-	if (input == "-inff" || input == "+inff")
-	{
+static bool printPseudoLiteral(str cref input) {
+	if (false
+		|| input == "-inff"
+		|| input == "-inf"
+		|| input == "+inff"
+		|| input == "+inf"
+		|| input == "nanf"
+		|| input == "nan"
+	) {
 		charPrint(0, true);
 		intPrint(0, true);
-		if (input == "-inff") {
+		if (input == "-inff" || input == "-inf") {
 			floatPrint(-__builtin_inff());
 			doublePrint(-__builtin_inf());
-		} else {
+		} else if (input == "+inff" || input == "+inf") {
 			floatPrint(__builtin_inff());
 			doublePrint(__builtin_inf());
-		}
-		return true;
-	}
-	if (input == "-inf" || input == "+inf" || input == "nan")
-	{
-		charPrint(0, true);
-		intPrint(0, true);
-		floatPrint(0,true);
-		if (input == "-inf")
-			doublePrint(-__builtin_inf());
-		else if (input == "+inf")
-			doublePrint(__builtin_inf());
-		else
+		} else {
+			floatPrint(__builtin_nan("0x7fc00000"));
 			doublePrint(__builtin_nan("0x7fc00000"));
+		}
 		return true;
 	}
 	return false;
 }
 
-static void charPrint(char c, bool undisplayable) {
-	PRINT TAB BCYN "char: " CLR;
+static void charPrint(const char c, const bool undisplayable) {
+	PRINT TAB CYN BOLD "char: " CLR;
 	if (undisplayable)
-		PRINT BPRP "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CLR ENDL;
 	else
 		PRINT c AND CLR ENDL;
 }
 
-static bool isCharPrintable(bool isInteger, int value)
+static bool isCharPrintable(const bool isInteger, const int value)
 {
 	if (!isInteger)
 		return false;
@@ -222,27 +215,27 @@ static bool isCharPrintable(bool isInteger, int value)
 	return true;
 }
 
-static bool isFloatInteger(float f) {
+static bool isFloatInteger(const float f) {
 	if (f - static_cast<long>(f) != 0)
 		return false;
 	return true;
 }
 
-static void intPrint(int i, bool undisplayable) {
-	PRINT TAB BCYN "int: " CLR;
+static void intPrint(const int i, const bool undisplayable) {
+	PRINT TAB CYN BOLD "int: " CLR;
 	if (undisplayable)
-		PRINT BPRP "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CLR ENDL;
 	else
 		PRINT i AND CLR ENDL;
 }
 
-static void floatPrint(float f, bool undisplayable) {
-	PRINT TAB BCYN "float: " CLR;
+static void floatPrint(const float f, const bool undisplayable) {
+	PRINT TAB CYN BOLD "float: " CLR;
 	if (undisplayable)
-		PRINT BPRP "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CLR ENDL;
 	else
 	{
-		if (isFloatInteger(f))
+		if (isFloatInteger(f) && TOSTR(f).find('e') == str::npos)
 			PRINT f AND ".0";
 		else
 			PRINT f;
@@ -250,7 +243,7 @@ static void floatPrint(float f, bool undisplayable) {
 	}
 }
 
-static void doublePrint(double d) {
-	PRINT TAB BCYN "double: " CLR;
+static void doublePrint(const double d) {
+	PRINT TAB CYN BOLD "double: " CLR;
 	PRINT d AND CLR ENDL;
 }

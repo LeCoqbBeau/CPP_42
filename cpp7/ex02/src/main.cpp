@@ -2,13 +2,8 @@
 // Created by mscheman on 8/16/24.
 //
 
-#include <iostream>
-
-#include "iter.h"
 #include "array.h"
-#include "colors.h"
-#include "printUtils.h"
-
+#include "iter.h"
 
 typedef enum e_zone {
 	ALPHA = 0,
@@ -17,48 +12,73 @@ typedef enum e_zone {
 	DELTA,
 	ECHO,
 	E_ZONE_END
-}	t_zone;
+} t_zone;
 
 typedef struct s_drill {
-	s_drill() : sector(E_ZONE_END), output(0), type("None") {};
-	s_drill(t_zone zone, size_t veinDensity, const std::string &ore)
+	// Constructors
+	s_drill(const t_zone zone = E_ZONE_END, const size_t veinDensity = 0, str cref ore = "None")
 			: sector(zone), output(veinDensity), type(ore) {};
-	t_zone		sector;
-	size_t		output;
-	std::string	type;
+	// Attributes
+	t_zone	sector;
+	size_t	output;
+	str		type;
 }	t_drill;
 
 static std::string zoneToStr(t_zone zone);
-static void printDrill(const t_drill &drill);
+static void printDrill(t_drill cref drill);
 
 int main() {
 	Array<t_drill> drills(5);
 
 	NEWL;
-	PRINT BPRP "-----[ Initiating Sector Alpha Expansion Process ]-----" CLR ENDL;
+	PRINT PRP BOLD "-----[ Initiating Sector Alpha Expansion Process ]-----" CENDL;
 	NEWL;
 
-	PRINT PRP " Producing drills, number expected: 10" CLR ENDL;
+	PRINT PRP " Producing drills, number expected: 10" CENDL;
 	for (int i = 0; i < 10; ++i) {
 		try {
 			drills[i] = t_drill(ALPHA, 70, "Diamond");
 			PRINT "  Successfully produced drill number " AND i ENDL;
-		} catch (std::exception &e) {
-			ERROR BRED "  Not enough resources for drill number " AND i AND CLR ENDL;
+		} catch (std::exception ref e) {
+			ERROR RED BOLD "  Not enough resources for drill number " AND i CENDL;
 		}
 	}
-	PRINT PRP " Produced and deployed " CLR AND drills.size() AND PRP " drills on ALPHA" CLR ENDL;
+	PRINT PRP " Produced and deployed " CLR AND drills.size() AND PRP " drills on ALPHA" CENDL;
 
 	NEWL;
-	PRINT PRP " Now examining all new drills behaviour:" CLR ENDL;
+	PRINT PRP " Now examining all new drills behaviour:" CENDL;
 	::iter(drills.data(), drills.size(), printDrill);
 
 	NEWL;
-	PRINT BPRP "-----[ Terminated Sector Alpha Expansion Process ]-----" CLR ENDL;
+	PRINT PRP BOLD "-----[ Terminated Sector Alpha Expansion Process ]-----" CENDL;
 	NEWL;
+
+	NEWL;
+	PRINT PRP BOLD "-----[ Initiating Sector Bravo Expansion Process ]-----" CENDL;
+	NEWL;
+
+	Array<t_drill> motors(10);
+	PRINT PRP " Producing 10 drills:" CENDL;
+	std::fill_n(motors.getArray(), motors.size(), t_drill(BRAVO, 115, "Gold"));
+	::iter(motors.data(), motors.size(), printDrill);
+	NEWL;
+	PRINT GRN BOLD " NEW DIAMOND VEIN DISCOVERED ON SECTOR ALPHA" CENDL;
+	PRINT PRP " Repurposing Sector Bravo's drills into diamond drill" CENDL;
+	motors = drills;
+	NEWL;
+	PRINT PRP " Now examining all scraped drills behaviour:" CENDL;
+	::iter(motors.data(), motors.size(), printDrill);
+
+	NEWL;
+	PRINT PRP BOLD "-----[ Terminated Sector Bravo Expansion Process ]-----" CENDL;
+	NEWL;
+	// {
+	// 	Array<t_drill> test = drills;
+	// 	::iter(test.data(), test.size(), printDrill);
+	// }
 }
 
-static std::string zoneToStr(t_zone zone) {
+static std::string zoneToStr(const t_zone zone) {
 	switch (zone) {
 		case ALPHA:
 			return "ALPHA";
@@ -75,10 +95,10 @@ static std::string zoneToStr(t_zone zone) {
 	}
 }
 
-static void printDrill(const t_drill &drill) {
+static void printDrill(t_drill cref drill) {
 	PRINT TAB;
-	PRINT BYLW "Drill on " CLR AND zoneToStr(drill.sector);
-	PRINT BYLW " producing " CLR AND  drill.output AND " " AND drill.type ;
-	PRINT BYLW "/day." CLR;
+	PRINT YLW BOLD "Drill on " CLR AND zoneToStr(drill.sector);
+	PRINT YLW BOLD " producing " CLR AND  drill.output AND " " AND drill.type ;
+	PRINT YLW BOLD "/day." CLR;
 	NEWL;
 }

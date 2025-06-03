@@ -3,64 +3,64 @@
 //
 
 #ifndef ARRAY_H
-#define ARRAY_H
+# define ARRAY_H
 
-#include <stdexcept>
-typedef unsigned int uint;
+# include "utils.h"
+# include <stdexcept>
 
 template<class T>
 class Array {
-public:
-	// Cannonical Orthodox Form
-	Array() : _size(0) {
-		_array = new T [_size];
-	}
-
-	Array(uint n) : _size(n) {
-		_array = new T [_size];
-	}
-
-	Array(const Array &src) {
-		this = src;
-	}
-
-	Array &operator = (const Array &rhs) {
-		if (this == rhs)
-			return *this;
-		const_cast<uint>(this->_size) = rhs.size();
-		_array = new T [_size];
-		for (uint i = 0; i < _size; ++i) {
-			_array[i] = rhs._array[i];
+	public:
+		// Canonical Orthodox Form
+		Array(const uint n = 0) : _size(n) {
+			_array = new T [_size];
 		}
-		return *this;
-	}
 
-	~Array() {
-		try {
+		Array(Array cref src) : _size(0), _array(__nullptr) {
+			*this = src;
+		}
+
+		Array ref operator = (Array cref rhs) {
+			if (this == &rhs)
+				return (*this);
+
+			const_cast<uint ref>(this->size()) = rhs.size();
 			delete[] _array;
-		} catch (...) {};
-	}
+			_array = new T [_size];
+			std::copy(rhs.data(), rhs.data() + rhs.size(), _array);
+			return (*this);
+		}
 
-	// Overloads
-	T &operator [] (const uint idx) {
-		if (idx >= _size)
-			throw std::out_of_range("");
-		return _array[idx];
-	}
+		~Array() {
+			try {
+				delete[] _array;
+			} catch (...) {};
+		}
 
-	// Methods
-	const uint &size() {
-		return _size;
-	}
+		// Overloads
+		T ref operator [] (const uint idx) {
+			if (idx >= _size)
+				throw std::out_of_range("");
+			return _array[idx];
+		}
 
-	const T *data() {
-		return _array;
-	}
+		// Methods
+		uint cref size() const {
+			return (_size);
+		}
 
-private:
-	const uint _size;
-	T	*_array;
+		const T *data() const {
+			return (_array);
+		}
+
+		// Accessors
+		T *getArray() {
+			return (_array);
+		}
+
+	private:
+		const uint	_size;
+		T			*_array;
 };
-
 
 #endif //ARRAY_H

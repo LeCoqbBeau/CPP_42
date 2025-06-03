@@ -10,8 +10,8 @@ Base *generate() {
 	static unsigned int callNum = 0;
 	Base *newBase;
 
-	PRINT BYLW "Call " CLR AND callNum++ AND BYLW " generated: " CLR;
-	switch (rand() % 3) {
+	PRINT YLW BOLD "Call " CLR AND callNum++ AND YLW BOLD " generated: " CLR;
+	switch (std::rand() % 3) {
 		case baseA:
 			newBase = new A;
 			PRINT "A" ENDL;
@@ -29,7 +29,7 @@ Base *generate() {
 }
 
 void identify(Base* p) {
-	PRINT BCYN "Identified pointer as a: " CLR;
+	PRINT CYN BOLD "Identified pointer as a: " CLR;
 	if (dynamic_cast<A *>(p))
 		PRINT "base A" CLR;
 	else if (dynamic_cast<B *>(p))
@@ -37,26 +37,26 @@ void identify(Base* p) {
 	else if (dynamic_cast<C *>(p))
 		PRINT "base C" CLR;
 	else
-		PRINT BRED "base bozo" CLR;
-	PRINT "" ENDL;
+		PRINT RED BOLD "base bozo" CLR;
+	NEWL;
 }
 
-void identify(Base& p) {
-	PRINT BGRN "Identified reference as a: " CLR;
+void identify(Base ref p) {
+	PRINT GRN BOLD "Identified reference as a: " CLR;
 	try {
-		(void)dynamic_cast<A &>(p);
+		(void)dynamic_cast<A ref>(p);
 		PRINT "base A" CLR ENDL;
 		return;
 	} catch (...) {}
 	try {
-		(void)dynamic_cast<B &>(p);
+		(void)dynamic_cast<B ref>(p);
 		PRINT "base B" CLR ENDL;
 		return;
 	} catch (...) {}
 	try {
-		(void)dynamic_cast<C &>(p);
+		(void)dynamic_cast<C ref>(p);
 		PRINT "base C" CLR ENDL;
 		return;
 	} catch (...) {}
-	PRINT BRED "base bozo" CLR ENDL;
+	PRINT RED BOLD "base bozo" CENDL;
 }

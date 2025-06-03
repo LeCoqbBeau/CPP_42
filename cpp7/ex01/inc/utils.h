@@ -19,7 +19,7 @@ inline uint getTerminalWidth();
 
 // toString
 #define TOSTR( x )	static_cast< std::ostringstream & >( \
-					( std::ostringstream() << std::dec << x ) ).str()
+( std::ostringstream() << std::dec << x ) ).str()
 
 // Print Utils
 # define AND <<

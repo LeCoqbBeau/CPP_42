@@ -5,26 +5,21 @@
 #ifndef SERIALIZER_H
 #define SERIALIZER_H
 
-#include <iostream>
-#include <string>
-#include <stdint.h>
-#include "colors.h"
+#include "utils.h"
 
-#define PRINT std::cout <<
-#define AND <<
-#define ENDL << std::endl
+#include <stdint.h>
 
 typedef struct s_veryComplicatedData {
 	int	complicatedNumber;
-	std::string complicatedString;
+	str complicatedString;
 } t_veryComplicatedData;
 
 class Serializer {
-public:
-	static uintptr_t serialize(t_veryComplicatedData *complicatedPtr);
-	static t_veryComplicatedData *deserialize(uintptr_t complicatedRawNumber);
-private:
-	Serializer();
+	public:
+		static uintptr_t serialize(t_veryComplicatedData *complicatedPtr);
+		static t_veryComplicatedData *deserialize(uintptr_t complicatedRawNumber);
+	private:
+		Serializer();
 };
 
 

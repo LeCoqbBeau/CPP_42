@@ -3,27 +3,25 @@
 //
 
 #include <Serializer.h>
+#include <cstdlib>
+#include <ctime>
 
 int main() {
 	t_veryComplicatedData originalVeryComplicatedStorage;
 
-	originalVeryComplicatedStorage.complicatedNumber = 512;
+	std::srand(std::time(__nullptr));
+	originalVeryComplicatedStorage.complicatedNumber = std::time(__nullptr) % std::rand();
 	originalVeryComplicatedStorage.complicatedString = "Hello World!";
 
-	uintptr_t raw = Serializer::serialize(&originalVeryComplicatedStorage);
+	const uintptr_t raw = Serializer::serialize(&originalVeryComplicatedStorage);
+	const t_veryComplicatedData* veryComplicatedStoragePointer = Serializer::deserialize(raw);
 
-	t_veryComplicatedData *veryComplicatedStoragePointer;
-	veryComplicatedStoragePointer = Serializer::deserialize(raw);
 
-	PRINT "" ENDL;
-
-	PRINT BPRP "Original very complicated storage's complicated string: " CLR AND originalVeryComplicatedStorage.complicatedString ENDL;
-	PRINT BCYN "Very complicated storage pointer's complicated string: " CLR AND veryComplicatedStoragePointer->complicatedString ENDL;
-
-	PRINT "" ENDL;
-
-	PRINT BPRP "Original very complicated storage's complicated number: " CLR AND originalVeryComplicatedStorage.complicatedNumber ENDL;
-	PRINT BCYN "Very complicated storage pointer's complicated number: " CLR AND veryComplicatedStoragePointer->complicatedNumber ENDL;
-
-	PRINT "" ENDL;
+	NEWL;
+	SHOW(originalVeryComplicatedStorage.complicatedString);
+	SHOW(veryComplicatedStoragePointer->complicatedString);
+	NEWL;
+	SHOW(originalVeryComplicatedStorage.complicatedNumber);
+	SHOW(veryComplicatedStoragePointer->complicatedNumber);
+	NEWL;
 }

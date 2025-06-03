@@ -5,13 +5,9 @@
 #ifndef BASE_H
 #define BASE_H
 
-#include "colors.h"
-#include <iostream>
-#include <cmath>
+#include "utils.h"
 
-#define PRINT std::cout <<
-#define AND <<
-#define ENDL << std::endl
+#include <cstdlib>
 
 typedef enum e_base {
 	baseA = 0,
@@ -21,16 +17,16 @@ typedef enum e_base {
 } t_base;
 
 class Base {
-public:
-	virtual ~Base();
+	public:
+		virtual ~Base();
 };
 
-class A : public Base {};
-class B : public Base {};
-class C : public Base {};
-
 Base *generate();
-void identify(Base* p);
-void identify(Base& p);
+void identify(Base *p);
+void identify(Base ref p);
+
+#include "A.h"
+#include "B.h"
+#include "C.h"
 
 #endif //BASE_H
