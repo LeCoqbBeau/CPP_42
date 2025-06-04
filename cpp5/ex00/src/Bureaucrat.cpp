@@ -71,33 +71,15 @@ void Bureaucrat::_downGrade(int cref amount) {
 }
 
 // Stream Output overload
-std::ostream ref operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) {
+std::ostream ref operator << (std::ostream ref os, Bureaucrat cref bureaucrat) {
 	os	AND CYN BOLD AND bureaucrat.getName()
 		AND CLR CYN ", got " CYN BOLD AND bureaucrat.getGrade() AND CLR CYN " out of 150." CLR;
 	return os;
 }
 
 // Exceptions
-Bureaucrat::GradeTooHighException::GradeTooHighException() throw() {}
-
-Bureaucrat::GradeTooHighException::GradeTooHighException(Bureaucrat::GradeTooHighException cref) throw() {}
-
-Bureaucrat::GradeTooHighException ref
-Bureaucrat::GradeTooHighException::operator = (Bureaucrat::GradeTooHighException cref) throw() {
-	return (*this);
-}
-
 const char *Bureaucrat::GradeTooHighException::what() const throw() {
 	return RED BOLD "Bucreaucrat got promoted due to outstanding performance." CLR;
-}
-
-Bureaucrat::GradeTooLowException::GradeTooLowException() throw() {}
-
-Bureaucrat::GradeTooLowException::GradeTooLowException(Bureaucrat::GradeTooLowException cref) throw() {}
-
-Bureaucrat::GradeTooLowException ref
-Bureaucrat::GradeTooLowException::operator=(Bureaucrat::GradeTooLowException cref) throw() {
-	return (*this);
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {

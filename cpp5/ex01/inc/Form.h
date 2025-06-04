@@ -31,16 +31,10 @@ class Form {
 		// Exceptions
 		class GradeTooHighException : public std::exception {
 			public:
-				GradeTooHighException() throw();
-				GradeTooHighException (GradeTooHighException cref) throw();
-				GradeTooHighException ref operator= (GradeTooHighException cref) throw();
 				virtual const char *what() const throw();
 		};
 		class GradeTooLowException : public std::exception {
 			public:
-				GradeTooLowException() throw();
-				GradeTooLowException (GradeTooLowException cref) throw();
-				GradeTooLowException ref operator= (GradeTooLowException cref) throw();
 				virtual const char *what() const throw();
 		};
 

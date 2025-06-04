@@ -93,26 +93,8 @@ void Form::beSigned(Bureaucrat ref bureaucrat) {
 }
 
 // Exceptions
-Form::GradeTooHighException::GradeTooHighException() throw() {}
-
-Form::GradeTooHighException::GradeTooHighException(Form::GradeTooHighException cref) throw() {}
-
-Form::GradeTooHighException ref
-Form::GradeTooHighException::operator = (Form::GradeTooHighException cref) throw() {
-	return (*this);
-}
-
 const char *Form::GradeTooHighException::what() const throw() {
 	return RED BOLD "Bucreaucrat got promoted due to outstanding performance." CLR;
-}
-
-Form::GradeTooLowException::GradeTooLowException() throw() {}
-
-Form::GradeTooLowException::GradeTooLowException(Form::GradeTooLowException cref) throw() {}
-
-Form::GradeTooLowException ref
-Form::GradeTooLowException::operator = (Form::GradeTooLowException cref) throw() {
-	return (*this);
 }
 
 const char *Form::GradeTooLowException::what() const throw() {

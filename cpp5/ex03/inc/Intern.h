@@ -30,8 +30,8 @@ class Intern {
 		AForm *makeForm(str cref name, str cref target);
 
 	private:
-		static t_form				_identifyForm(str cref name);
-		static void					_printCreation(t_form form);
+		static t_form	_identifyForm(str cref name);
+		static void		_printCreation(t_form form);
 };
 
 #endif //INTERN

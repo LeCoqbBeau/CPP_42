@@ -14,7 +14,7 @@ class RobotomyRequestForm : public AForm {
 		RobotomyRequestForm();
 		RobotomyRequestForm(str cref target = "Default");
 		RobotomyRequestForm(RobotomyRequestForm cref src);
-		RobotomyRequestForm&operator=(RobotomyRequestForm cref rhs);
+		RobotomyRequestForm ref operator=(RobotomyRequestForm cref rhs);
 		~RobotomyRequestForm();
 
 		// Accessors

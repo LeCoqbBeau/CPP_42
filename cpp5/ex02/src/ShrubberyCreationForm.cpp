@@ -41,7 +41,7 @@ void ShrubberyCreationForm::setTarget(str cref target) {
 }
 
 // Methods
-void ShrubberyCreationForm::_formAction() const throw() {
+void ShrubberyCreationForm::_formAction() const {
 	str filePath;
 	std::ofstream fileStream;
 

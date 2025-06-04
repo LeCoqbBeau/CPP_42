@@ -101,38 +101,12 @@ void AForm::execute(Bureaucrat cref executor) const {
 }
 
 // Exceptions
-AForm::GradeTooHighException::GradeTooHighException() throw() {}
-
-AForm::GradeTooHighException::GradeTooHighException(AForm::GradeTooHighException cref) throw() {}
-
-AForm::GradeTooHighException ref
-AForm::GradeTooHighException::operator = (AForm::GradeTooHighException cref) throw() {
-	return (*this);
-}
-
 const char *AForm::GradeTooHighException::what() const throw() {
 	return RED BOLD "Bucreaucrat got promoted due to outstanding performance." CLR;
 }
 
-AForm::GradeTooLowException::GradeTooLowException() throw() {}
-
-AForm::GradeTooLowException::GradeTooLowException(AForm::GradeTooLowException cref) throw() {}
-
-AForm::GradeTooLowException ref
-AForm::GradeTooLowException::operator = (AForm::GradeTooLowException cref) throw() {
-	return (*this);
-}
-
 const char *AForm::GradeTooLowException::what() const throw() {
 	return RED BOLD "Bucreaucrat got fired due to poor performance." CLR;
-}
-
-AForm::FormNotSignedException::FormNotSignedException() throw() {}
-
-AForm::FormNotSignedException::FormNotSignedException(AForm::FormNotSignedException cref) throw() {}
-
-AForm::FormNotSignedException ref AForm::FormNotSignedException::operator=(AForm::FormNotSignedException cref) throw() {
-	return *this;
 }
 
 const char *AForm::FormNotSignedException::what() const throw() {

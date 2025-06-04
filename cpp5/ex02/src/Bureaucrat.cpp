@@ -120,26 +120,8 @@ std::ostream ref operator AND (std::ostream ref os, Bureaucrat cref bureaucrat) 
 }
 
 // Exceptions
-Bureaucrat::GradeTooHighException::GradeTooHighException() throw() {}
-
-Bureaucrat::GradeTooHighException::GradeTooHighException(Bureaucrat::GradeTooHighException cref) throw() {}
-
-Bureaucrat::GradeTooHighException ref
-Bureaucrat::GradeTooHighException::operator = (Bureaucrat::GradeTooHighException cref) throw() {
-	return (*this);
-}
-
 const char *Bureaucrat::GradeTooHighException::what() const throw() {
 	return RED BOLD "Bucreaucrat got promoted due to outstanding performance." CLR;
-}
-
-Bureaucrat::GradeTooLowException::GradeTooLowException() throw() {}
-
-Bureaucrat::GradeTooLowException::GradeTooLowException(Bureaucrat::GradeTooLowException cref) throw() {}
-
-Bureaucrat::GradeTooLowException ref
-Bureaucrat::GradeTooLowException::operator=(Bureaucrat::GradeTooLowException cref) throw() {
-	return (*this);
 }
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {

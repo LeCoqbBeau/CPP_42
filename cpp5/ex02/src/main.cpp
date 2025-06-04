@@ -11,6 +11,8 @@
 #define PARDON_FORM 1
 #define ROBOTOMY_FORM 2
 
+#define TRY_CATCH(statement) try { statement; } catch (std::exception ref e) { ERROR e.what() ENDL; }
+
 int	main()
 {
 	Bureaucrat signer("signer", 4);
@@ -33,23 +35,11 @@ int	main()
 				return 0;
 		}
 		PRINT *form ENDL;
-		try {
-			noob.executeForm(*form);
-		} catch (std::exception ref e) {
-			ERROR e.what() ENDL;
-		}
-		signer.signForm(*form);
-		executor.executeForm(*form);
-		try {
-			noob.executeForm(*form);
-		} catch (std::exception ref e) {
-			ERROR e.what() ENDL;
-		}
-		try {
-			pro.executeForm(*form);
-		} catch (std::exception ref e) {
-			ERROR e.what() ENDL;
-		}
+		TRY_CATCH(noob.executeForm(*form);)
+		TRY_CATCH(signer.signForm(*form);)
+		TRY_CATCH(executor.executeForm(*form);)
+		TRY_CATCH(noob.executeForm(*form);)
+		TRY_CATCH(pro.executeForm(*form);)
 		delete form;
 	}
 }
