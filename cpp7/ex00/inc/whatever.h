@@ -2,8 +2,8 @@
 // Created by mscheman on 10/17/24.
 //
 
-#ifndef TEMPLATE_H
-# define TEMPLATE_H
+#ifndef WHATEVER_H
+# define WHATEVER_H
 
 # include "utils.h"
 
@@ -27,4 +27,4 @@ T inline static min(T cref x, T cref y) {
 	return std::min(x, y);
 }
 
-#endif //TEMPLATE_H
+#endif //WHATEVER_H

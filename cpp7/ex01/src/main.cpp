@@ -16,7 +16,7 @@ typedef enum e_zone {
 
 typedef struct s_drill {
 	// Constructor
-	inline s_drill(const t_zone zone, const size_t veinDensity, str cref ore)
+	inline s_drill(const t_zone zone = ALPHA, const size_t veinDensity = 0, str cref ore = "Nothing")
 		: sector(zone), output(veinDensity), type(ore) {};
 
 	// Attributes
@@ -27,8 +27,8 @@ typedef struct s_drill {
 
 static void printZone(t_zone zone);
 static str zoneToStr(t_zone zone);
-
-static void printDrill(t_drill cref drill);
+static void examine(t_drill cref drill);
+static void boost(t_drill ref drill);
 
 int main() {
 	t_zone availableZone[] = {
@@ -39,18 +39,22 @@ int main() {
 			ECHO,
 	};
 
-	const t_drill workingDrills[] = {
-			s_drill(ALPHA, 51, "Diamond"),
+	const t_drill constWorkingDrills[] = {
+			s_drill(ALPHA, 50, "Diamond"),
 			s_drill(ALPHA, 60, "Diamond"),
-			s_drill(BRAVO, 3, "Uranium"),
-			s_drill(BRAVO, 9, "Uranium"),
-			s_drill(CHARLIE, 79, "Gold"),
-			s_drill(CHARLIE, 62, "Gold"),
-			s_drill(DELTA, 956, "Coal"),
-			s_drill(DELTA, 840, "Coal"),
-			s_drill(ECHO, 146, "Iron"),
-			s_drill(ECHO, 155, "Iron"),
+			s_drill(BRAVO, 5, "Uranium"),
+			s_drill(BRAVO, 10, "Uranium"),
+			s_drill(CHARLIE, 80, "Gold"),
+			s_drill(CHARLIE, 60, "Gold"),
+			s_drill(DELTA, 950, "Coal"),
+			s_drill(DELTA, 850, "Coal"),
+			s_drill(ECHO, 140, "Iron"),
+			s_drill(ECHO, 160, "Iron"),
 	};
+
+	t_drill workingDrills[10];
+	std::copy(constWorkingDrills, constWorkingDrills + 10, workingDrills);
+
 
 	NEWL;
 	PRINT PRP BOLD "-----[ Initiating Advanced Mining Zone Analysis ]-----" CENDL;
@@ -59,7 +63,11 @@ int main() {
 	::iter(availableZone, 5, printZone);
 	NEWL;
 	PRINT PRP " Now examining all drills on all zones:" CENDL;
-	::iter(workingDrills, 10, printDrill);
+	::iter(constWorkingDrills, 10, examine);
+	NEWL;
+	PRINT PRP " Now boosting all drills on all zones:" CENDL;
+	::iter(workingDrills, 10, boost);
+	::iter(workingDrills, 10, examine);
 	NEWL;
 	PRINT PRP BOLD "-----[ Terminated Advanced Mining Zone Analysis ]-----" CENDL;
 	NEWL;
@@ -88,10 +96,14 @@ static std::string zoneToStr(const t_zone zone) {
 	}
 }
 
-static void printDrill(t_drill cref drill) {
+static void examine(t_drill cref drill) {
 	PRINT TAB;
-	PRINT YLW BOLD "Drill on " CLR AND zoneToStr(drill.sector);
-	PRINT YLW BOLD " producing " CLR AND drill.output AND " " AND drill.type ;
-	PRINT YLW BOLD "/day." CLR;
+	PRINT CYN BOLD "Drill on " CLR AND zoneToStr(drill.sector);
+	PRINT CYN BOLD " producing " CLR AND drill.output AND " " AND drill.type ;
+	PRINT CYN BOLD "/day." CLR;
 	NEWL;
+}
+
+static void boost(t_drill ref drill) {
+	drill.output *= 2;
 }

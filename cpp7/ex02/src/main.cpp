@@ -16,7 +16,7 @@ typedef enum e_zone {
 
 typedef struct s_drill {
 	// Constructors
-	s_drill(const t_zone zone = E_ZONE_END, const size_t veinDensity = 0, str cref ore = "None")
+	s_drill(const t_zone zone = ALPHA, const size_t veinDensity = 0, str cref ore = "Nothing")
 			: sector(zone), output(veinDensity), type(ore) {};
 	// Attributes
 	t_zone	sector;
@@ -25,7 +25,7 @@ typedef struct s_drill {
 }	t_drill;
 
 static std::string zoneToStr(t_zone zone);
-static void printDrill(t_drill cref drill);
+static void examine(t_drill cref drill);
 
 int main() {
 	Array<t_drill> drills(5);
@@ -47,7 +47,7 @@ int main() {
 
 	NEWL;
 	PRINT PRP " Now examining all new drills behaviour:" CENDL;
-	::iter(drills.data(), drills.size(), printDrill);
+	::iter(drills.data(), drills.size(), examine);
 
 	NEWL;
 	PRINT PRP BOLD "-----[ Terminated Sector Alpha Expansion Process ]-----" CENDL;
@@ -60,14 +60,14 @@ int main() {
 	Array<t_drill> motors(10);
 	PRINT PRP " Producing 10 drills:" CENDL;
 	std::fill_n(motors.getArray(), motors.size(), t_drill(BRAVO, 115, "Gold"));
-	::iter(motors.data(), motors.size(), printDrill);
+	::iter(motors.data(), motors.size(), examine);
 	NEWL;
 	PRINT GRN BOLD " NEW DIAMOND VEIN DISCOVERED ON SECTOR ALPHA" CENDL;
 	PRINT PRP " Repurposing Sector Bravo's drills into diamond drill" CENDL;
 	motors = drills;
 	NEWL;
 	PRINT PRP " Now examining all scraped drills behaviour:" CENDL;
-	::iter(motors.data(), motors.size(), printDrill);
+	::iter(motors.data(), motors.size(), examine);
 
 	NEWL;
 	PRINT PRP BOLD "-----[ Terminated Sector Bravo Expansion Process ]-----" CENDL;
@@ -95,7 +95,7 @@ static std::string zoneToStr(const t_zone zone) {
 	}
 }
 
-static void printDrill(t_drill cref drill) {
+static void examine(t_drill cref drill) {
 	PRINT TAB;
 	PRINT YLW BOLD "Drill on " CLR AND zoneToStr(drill.sector);
 	PRINT YLW BOLD " producing " CLR AND  drill.output AND " " AND drill.type ;

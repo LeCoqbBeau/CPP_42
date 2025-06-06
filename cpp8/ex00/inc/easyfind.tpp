@@ -2,33 +2,42 @@
 # include "easyfind.h"
 
 template <typename T>
-typename T::const_iterator easyfind(const T &container, int search) {
-	return std::find(container.begin(), container.end(), search);
+typename T::const_iterator easyfind(T cref container, int search) {
+	typename T::const_iterator it = std::find(container.begin(), container.end(), search);
+	if (it != container.end())
+		return (it);
+	throw std::logic_error("Searched element (" + TOSTR(search) + ") not found");
 }
 
 template <typename T>
-int easyfind(const std::queue<T> &container, int search) {
-	std::queue<T> queue = container;
-	while (!queue.empty()) {
-		if (queue.front() == search)
-			return queue.front();
-		queue.pop();
+int easyfind(std::queue<T> cref container, int search) {
+	std::queue<T> loop = container;
+	while (!loop.empty()) {
+		if (loop.front() == search)
+			return (loop.front());
+		loop.pop();
 	}
-	return (0);
+	throw std::logic_error("Searched element (" + TOSTR(search) + ") not found");
 }
 
 template <typename T>
-int easyfind(const std::stack<T> &container, int search) {
-	std::stack<T> stack = container;
-	while (!stack.empty()) {
-		if (stack.top() == search)
-			return stack.top();
-		stack.pop();
+int easyfind(std::priority_queue<T> cref container, int search) {
+	std::priority_queue<T> loop = container;
+	while (!loop.empty()) {
+		if (loop.top() == search)
+			return (loop.top());
+		loop.pop();
 	}
-	return (0);
+	throw std::logic_error("Searched element (" + TOSTR(search) + ") not found");
 }
 
 template <typename T>
-typename std::map<int, T>::const_iterator easyfind(const std::map<int, T> &map, int search) {
-	return map.find(search);
+int easyfind(std::stack<T> cref container, int search) {
+	std::stack<T> loop = container;
+	while (!loop.empty()) {
+		if (loop.top() == search)
+			return (loop.top());
+		loop.pop();
+	}
+	throw std::logic_error("Searched element (" + TOSTR(search) + ") not found");
 }

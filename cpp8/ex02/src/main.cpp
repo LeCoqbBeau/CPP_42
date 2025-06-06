@@ -2,10 +2,6 @@
 // Created by mscheman on 8/16/24.
 //
 
-#include <iostream>
-#include "colors.h"
-#include "printUtils.h"
-
 #include <MutantStack.h>
 
 int main()

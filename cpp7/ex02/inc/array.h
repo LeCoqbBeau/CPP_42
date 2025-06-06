@@ -13,7 +13,7 @@ class Array {
 	public:
 		// Canonical Orthodox Form
 		Array(const uint n = 0) : _size(n) {
-			_array = new T [_size];
+			data() = new T [size()];
 		}
 
 		Array(Array cref src) : _size(0), _array(__nullptr) {
@@ -24,16 +24,16 @@ class Array {
 			if (this == &rhs)
 				return (*this);
 
-			const_cast<uint ref>(this->size()) = rhs.size();
-			delete[] _array;
-			_array = new T [_size];
-			std::copy(rhs.data(), rhs.data() + rhs.size(), _array);
+			const_cast<uint ref>(size()) = rhs.size();
+			delete[] data();
+			data() = new T [size()];
+			std::copy(rhs.data(), rhs.data() + rhs.size(), data());
 			return (*this);
 		}
 
 		~Array() {
 			try {
-				delete[] _array;
+				delete[] data();
 			} catch (...) {};
 		}
 
@@ -41,21 +41,26 @@ class Array {
 		T ref operator [] (const uint idx) {
 			if (idx >= _size)
 				throw std::out_of_range("");
-			return _array[idx];
+			return data(idx);
 		}
 
-		// Methods
+		T cref operator [] (const uint idx) const {
+			if (idx >= _size)
+				throw std::out_of_range("");
+			return data(idx);
+		}
+
+		// Accessors
 		uint cref size() const {
 			return (_size);
 		}
 
-		const T *data() const {
+		T *data() {
 			return (_array);
 		}
 
-		// Accessors
-		T *getArray() {
-			return (_array);
+		T data(uint index) {
+			return (data()[index]);
 		}
 
 	private:

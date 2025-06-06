@@ -22,12 +22,12 @@ void ScalarConverter::convert(str cref input)
 
 	t_type litteralType = ScalarConverter::_identify(input);
 	if (litteralType == E_TYPE_END) {
-		ERROR RED BOLD "wrong inputs in 2024 is crazy :skull:" ENDL;
+		ERROR RED BOLD "wrong inputs in 2025 is crazy :skull:" ENDL;
 		return ;
 	}
 
 	void *data = ScalarConverter::_convert(input, litteralType);
-	if (data == 0) {
+	if (data == __nullptr) {
 		ERROR RED BOLD "i am NOT cooking this input" ENDL;
 		return ;
 	}
@@ -199,9 +199,11 @@ static bool printPseudoLiteral(str cref input) {
 static void charPrint(const char c, const bool undisplayable) {
 	PRINT TAB CYN BOLD "char: " CLR;
 	if (undisplayable)
-		PRINT PRP BOLD "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CENDL;
+	else if (isprint(c))
+		PRINT '\'' AND c AND '\'' CENDL;
 	else
-		PRINT c AND CLR ENDL;
+		PRINT "Non printable" CENDL;
 }
 
 static bool isCharPrintable(const bool isInteger, const int value)
@@ -224,15 +226,15 @@ static bool isFloatInteger(const float f) {
 static void intPrint(const int i, const bool undisplayable) {
 	PRINT TAB CYN BOLD "int: " CLR;
 	if (undisplayable)
-		PRINT PRP BOLD "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CENDL;
 	else
-		PRINT i AND CLR ENDL;
+		PRINT i CENDL;
 }
 
 static void floatPrint(const float f, const bool undisplayable) {
 	PRINT TAB CYN BOLD "float: " CLR;
 	if (undisplayable)
-		PRINT PRP BOLD "Non displayable" CLR ENDL;
+		PRINT PRP BOLD "Non displayable" CENDL;
 	else
 	{
 		if (isFloatInteger(f) && TOSTR(f).find('e') == str::npos)
@@ -245,5 +247,5 @@ static void floatPrint(const float f, const bool undisplayable) {
 
 static void doublePrint(const double d) {
 	PRINT TAB CYN BOLD "double: " CLR;
-	PRINT d AND CLR ENDL;
+	PRINT d CENDL;
 }

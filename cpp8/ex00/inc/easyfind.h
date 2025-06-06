@@ -5,20 +5,23 @@
 #ifndef EASYFIND_H
 #define EASYFIND_H
 
+# include "utils.h"
+
 # include <algorithm>
 # include <iterator>
+# include <stdexcept>
 
 template <typename T>
-typename T::const_iterator easyfind(const T &container, int search);
+typename T::const_iterator easyfind(T cref container, int search);
 
 template <typename T>
-int easyfind(const std::queue<T> &container, int search);
+int easyfind(std::queue<T> cref container, int search);
 
 template <typename T>
-int easyfind(const std::stack<T> &container, int search);
+int easyfind(std::priority_queue<T> cref container, int search);
 
 template <typename T>
-typename std::map<int, T>::const_iterator easyfind(const std::map<int, T> &map, int search);
+int easyfind(std::stack<T> cref container, int search);
 
 #include "easyfind.tpp"
 
