@@ -5,40 +5,38 @@
 #ifndef STOCKMARKET_H
 #define STOCKMARKET_H
 
-#include <iostream>
 #include <fstream>
 #include <map>
 #include <iomanip>
-
 #include <cstdlib>
 
-#include "colors.h"
-#include "printUtils.h"
+#include "utils.h"
 #include "Date.h"
 
 #define DATA_PATH "inc/data.csv"
 
 class StockMarket {
-public:
-	// Typedef
-	typedef std::map<t_date, float>::const_iterator const_iterator;
+	public:
+		// Typedef
+		typedef std::map<t_date, float> container;
+		typedef container::const_iterator const_iterator;
 
-	// Canonical Orthodox Form
-	StockMarket();
-	StockMarket(const std::map<t_date, float> &prices);
-	StockMarket(const StockMarket &src);
-	StockMarket &operator=(const StockMarket &rhs);
+		// Canonical Orthodox Form
+		StockMarket();
+		StockMarket(container cref prices);
+		StockMarket(StockMarket cref src);
+		StockMarket ref operator = (StockMarket cref rhs);
 
-	// Overload
-	float operator[](const t_date &idx) const;
+		// Overload
+		float operator [] (t_date cref idx) const;
 
-	// Methods
-	void printMarket();
-	float at(const t_date &date) const;
+		// Methods
+		void printMarket();
+		float at(t_date cref date) const;
+		void loadData();
 
-private:
-	std::map<t_date, float> _prices;
-	void _loadData();
+	private:
+		container _prices;
 };
 
 #endif //STOCKMARKET_H

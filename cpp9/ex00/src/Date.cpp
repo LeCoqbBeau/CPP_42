@@ -4,17 +4,29 @@
 
 #include "Date.h"
 
-// Constructor
-s_date::s_date() {
-	year = 0;
-	month = 0;
-	day = 0;
-}
+// Static Members
+uint t_date::maxDays[12] = {
+	31, // JANUARY
+	28, // FEBRUARY
+	31, // MARCH
+	30, // APRIL
+	31, // MAY
+	30, // JUNE
+	31, // JULY
+	31, // AUGUST
+	30, // SEPTEMBER
+	31, // OCTOBER
+	30, // NOVEMBER
+	31, // DECEMBER
+};
 
-s_date::s_date(uint year, uint month, uint day) {
+// Constructor
+s_date::s_date(const uint year, const uint month, const uint day) {
 	if (month == 0 || month > 12)
 		throw std::out_of_range("Invalid month");
-	if (day == 0 || day > 31)
+	if (day == 0
+		|| (day > maxDays[month - 1]
+		&& (month == 2 && (year % 4 == 0) && day > maxDays[month - 1] + 1)))
 		throw std::out_of_range("Invalid day");
 	this->year = year;
 	this->month = month;
@@ -22,7 +34,7 @@ s_date::s_date(uint year, uint month, uint day) {
 }
 
 // Overload Relational Operators
-bool s_date::operator==(const s_date& rhs) const {
+bool s_date::operator == (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return false;
 	if (this->month != rhs.month)
@@ -32,7 +44,7 @@ bool s_date::operator==(const s_date& rhs) const {
 	return true;
 }
 
-bool s_date::operator!=(const s_date& rhs) const {
+bool s_date::operator != (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return true;
 	if (this->month != rhs.month)
@@ -42,7 +54,7 @@ bool s_date::operator!=(const s_date& rhs) const {
 	return false;
 }
 
-bool s_date::operator>(const s_date& rhs) const {
+bool s_date::operator > (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return this->year > rhs.year;
 	if (this->month != rhs.month)
@@ -52,7 +64,7 @@ bool s_date::operator>(const s_date& rhs) const {
 	return false;
 }
 
-bool s_date::operator>=(const s_date& rhs) const {
+bool s_date::operator >= (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return this->year > rhs.year;
 	if (this->month != rhs.month)
@@ -62,7 +74,7 @@ bool s_date::operator>=(const s_date& rhs) const {
 	return true;
 }
 
-bool s_date::operator<(const s_date& rhs) const {
+bool s_date::operator < (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return this->year < rhs.year;
 	if (this->month != rhs.month)
@@ -72,7 +84,7 @@ bool s_date::operator<(const s_date& rhs) const {
 	return false;
 }
 
-bool s_date::operator<=(const s_date& rhs) const {
+bool s_date::operator <= (s_date cref rhs) const {
 	if (this->year != rhs.year)
 		return this->year < rhs.year;
 	if (this->month != rhs.month)
@@ -84,7 +96,7 @@ bool s_date::operator<=(const s_date& rhs) const {
 
 // Methods
 void s_date::print() const {
-	PRINT BBLK " [ " AND this->year AND "-";
+	PRINT " [ " AND this->year AND "-";
 	PRINT std::setfill('0') AND std::setw(2) AND this->month;
 	std::flush(std::cout);
 	PRINT "-";

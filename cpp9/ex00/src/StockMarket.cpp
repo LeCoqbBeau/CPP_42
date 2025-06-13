@@ -5,25 +5,25 @@
 #include "StockMarket.h"
 
 // Canonical Orthodox Form
-StockMarket::StockMarket() {
-	_loadData();
-}
+StockMarket::StockMarket() {}
 
-StockMarket::StockMarket(const std::map<t_date, float>& prices) {
+StockMarket::StockMarket(StockMarket::container cref prices) {
 	_prices = prices;
 }
 
-StockMarket::StockMarket(const StockMarket& src) {
+StockMarket::StockMarket(StockMarket cref src) {
 	*this = src;
 }
 
-StockMarket& StockMarket::operator=(const StockMarket& rhs) {
+StockMarket ref StockMarket::operator = (StockMarket cref rhs) {
+	if (this == &rhs)
+		return *this;
 	this->_prices = rhs._prices;
 	return *this;
 }
 
 // Overload
-float StockMarket::operator[](const t_date& idx) const {
+float StockMarket::operator [] (t_date cref idx) const {
 	StockMarket::const_iterator it;
 	for (it = _prices.begin(); it != _prices.end(); ++it) {
 		if (it->first > idx)
@@ -33,15 +33,17 @@ float StockMarket::operator[](const t_date& idx) const {
 }
 
 // Methods
-static t_date extractDate(std::string &line);
-static float extractRate(std::string &line);
+static t_date extractDate(str cref line);
+static float extractRate(str cref line);
 
-void StockMarket::_loadData() {
+void StockMarket::loadData() {
 	std::ifstream	data(DATA_PATH);
-	std::string		line;
+	str				line;
 	t_date			tmpDate;
 	float			tmpRate;
 
+	if (!data.good())
+		throw std::runtime_error("Couldn't open data.csv");
 	std::getline(data, line);
 	while (!data.eof()) {
 		std::getline(data, line);
@@ -53,7 +55,7 @@ void StockMarket::_loadData() {
 	}
 }
 
-static t_date extractDate(std::string &line) {
+static t_date extractDate(str cref line) {
 	int		year;
 	int		month;
 	int		day;
@@ -72,7 +74,7 @@ static t_date extractDate(std::string &line) {
 	return t_date(year, month, day);
 }
 
-static float extractRate(std::string &line) {
+static float extractRate(str cref line) {
 	float	rate;
 	char	*end;
 
@@ -90,10 +92,10 @@ static float extractRate(std::string &line) {
 void StockMarket::printMarket() {
 	for (StockMarket::const_iterator it = _prices.begin(); it != _prices.end(); ++it) {
 		it->first.print();
-		PRINT ": " BYLW AND it->second AND CLR ENDL;
+		PRINT ": " YLW BOLD AND it->second AND CLR ENDL;
 	}
 }
 
-float StockMarket::at(const t_date& date) const {
+float StockMarket::at(t_date cref date) const {
 	return (*this)[date];
 }

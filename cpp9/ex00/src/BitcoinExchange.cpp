@@ -7,11 +7,13 @@
 // Canonical Orthofox Form
 BitcoinExchange::BitcoinExchange() {};
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange& src) {
+BitcoinExchange::BitcoinExchange(BitcoinExchange cref src) {
 	*this = src;
 }
 
-BitcoinExchange& BitcoinExchange::operator=(const BitcoinExchange& rhs) {
+BitcoinExchange& BitcoinExchange::operator=(BitcoinExchange cref rhs) {
+	if (this == &rhs)
+		return (*this);
 	this->_wallet = rhs._wallet;
 	return *this;
 }
@@ -26,10 +28,10 @@ BitcoinExchange::const_iterator BitcoinExchange::cend() const {
 }
 
 // Methods
-static t_date extractDate(std::string &line);
-static float extractAmount(std::string &line);
+static t_date extractDate(str cref line);
+static float extractAmount(str cref line);
 
-void BitcoinExchange::loadFile(const std::string& filePath) {
+void BitcoinExchange::loadFile(str cref filePath) {
 	std::ifstream	file(filePath.c_str());
 	std::string		line;
 	t_date			tmpDate;
@@ -45,29 +47,23 @@ void BitcoinExchange::loadFile(const std::string& filePath) {
 	while (!file.eof()) {
 		std::getline(file, line);
 		if (line.length() < 13 || line.at(11) != '|') {
-			ERROR BRED "Line doesn't follow format \"date | format\"" CLR ENDL;
-			ERROR TAB BBLK AND line AND CLR ENDL;
+			ERROR RED BOLD "Line doesn't follow format \"date | format\"" CENDL;
+			ERROR TAB AND line CENDL;
 			continue ;
 		}
-		try {
-			tmpDate = extractDate(line);
-		} catch (std::exception &e) {
-			ERROR BRED AND e.what() AND CLR ENDL;
-			ERROR TAB BBLK AND line AND CLR ENDL;
+		TRY_OPER(tmpDate = extractDate(line),
+			ERROR TAB AND line CENDL;
 			continue;
-		}
-		try {
-			tmpNum = extractAmount(line);
-		} catch (std::exception &e) {
-			ERROR BRED AND e.what() AND CLR ENDL;
-			ERROR TAB BBLK AND line AND CLR ENDL;
+		)
+		TRY_OPER(tmpNum = extractAmount(line),
+			ERROR TAB AND line CENDL;
 			continue;
-		}
+		)
 		_wallet.insert(_wallet.end(), std::pair<t_date, float>(tmpDate, tmpNum));
 	}
 }
 
-static t_date extractDate(std::string &line) {
+static t_date extractDate(str cref line) {
 	int		year;
 	int		month;
 	int		day;
@@ -86,7 +82,7 @@ static t_date extractDate(std::string &line) {
 	return t_date(year, month, day);
 }
 
-static float extractAmount(std::string &line) {
+static float extractAmount(str cref line) {
 	float	rate;
 	char	*end;
 
@@ -101,10 +97,10 @@ static float extractAmount(std::string &line) {
 	return rate;
 }
 
-void BitcoinExchange::printValue(const StockMarket &market) const {
+void BitcoinExchange::printValue(StockMarket cref market) const {
 	for (BitcoinExchange::const_iterator it = cbegin(); it != cend(); ++it) {
 		it->first.print();
-		PRINT "=> " BYLW AND it->second;
-		PRINT CLR " = " BGRN AND it->second * market[it->first] AND CLR ENDL;
+		PRINT "=> " YLW BOLD AND it->second;
+		PRINT CLR " = " GRN BOLD AND it->second * market[it->first] CENDL;
 	}
 }

@@ -1,8 +1,6 @@
 #ifndef RPN_H
 # define RPN_H
 
-# include <iostream>
-# include <string>
 # include <stdexcept>
 # include <stack>
 
@@ -10,8 +8,7 @@
 # include <climits>
 # include <cstdlib>
 
-# include "printUtils.h"
-# include "colors.h"
+# include "utils.h"
 
 enum e_operator {
 	ADD = '+',
@@ -22,37 +19,39 @@ enum e_operator {
 };
 
 struct s_rpnData {
-	s_rpnData() : op(E_OPERATOR_END), num(0), isOperator(true) {};
-	s_rpnData(const long &data) : op(E_OPERATOR_END), num(data), isOperator(false) {};
-	s_rpnData(const e_operator &data) : op(data), num(0), isOperator(true) {};
-	s_rpnData &operator=(const s_rpnData &rhs) { op = rhs.op; num = rhs.num; isOperator = rhs.isOperator; return *this; };
+	s_rpnData(e_operator = E_OPERATOR_END, float = 0, bool = false);
+	s_rpnData(s_rpnData cref src);
+	s_rpnData ref operator = (s_rpnData cref rhs);
 	e_operator	op;
-	long		num;
+	float		num;
 	bool		isOperator;
 };
 
-class RPN
-{
-public:
-	// Orthodox Canonical Form
-	RPN();
-	RPN(const std::stack<s_rpnData> &_operations);
-	RPN(const RPN &src);
-	RPN&operator=(const RPN &rhs);
-	~RPN();
+class RPN {
+	public:
+		// Typedef
+		typedef std::stack<s_rpnData> container;
 
-	// Accessors
-	const std::stack<s_rpnData> &getOperations() const;
-	void setOperations(const std::stack<s_rpnData> &_operations);
+		// Orthodox Canonical Form
+		RPN();
+		RPN(container cref operations);
+		RPN(RPN cref src);
+		RPN ref operator = (RPN cref rhs);
+		~RPN();
 
-	// Methods
-	void loadCalculation(const std::string &line);
+		// Accessors
+		container cref getOperations() const;
+		container ref getOperations();
+		void setOperations(container cref operations);
 
-private:
-	std::stack<s_rpnData> _operations;
-	void _calculate();
+		// Methods
+		void loadCalculation(str cref line);
+
+	private:
+		container	_operations;
+		void		_calculate();
 };
 
-std::ostream &operator<<(std::ostream &os, const RPN &rpn);
+std::ostream ref operator << (std::ostream ref os, RPN cref rpn);
 
 #endif //RPN

@@ -2,47 +2,18 @@
 // Created by lecoqbeau on 10/16/24.
 //
 
-#include <iostream>
-#include "colors.h"
-#include "printUtils.h"
-
 #include "StockMarket.h"
 #include "BitcoinExchange.h"
 
 int main(int argc, char *argv[]) {
 	(void)argc;
-	int	returnValue = 0;
 
-	StockMarket *market;
+	StockMarket market;
 	BitcoinExchange history;
 
-	try {
-		market = new StockMarket;
-	} catch (std::exception &e) {
-		ERROR BRED AND e.what() AND CLR ENDL;
-		returnValue = 1;
-		goto main_return;
-	}
+	TRY_RETURN(market.loadData())
+	TRY_RETURN(history.loadFile(argv[1]))
+	TRY_RETURN(history.printValue(market))
 
-	try {
-		history.loadFile(argv[1]);
-	} catch (std::exception &e) {
-		ERROR BRED AND e.what() AND CLR ENDL;
-		returnValue = 1;
-		goto main_unleak;
-	}
-
-	try {
-		history.printValue(*market);;
-	} catch (std::exception &e) {
-		ERROR BRED AND e.what() AND CLR ENDL;
-		returnValue = 1;
-		goto main_unleak;
-	}
-
-main_unleak:
-	delete market;
-
-main_return:
-	return (returnValue);
+	return (EXIT_SUCCESS);
 }

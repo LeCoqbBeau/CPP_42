@@ -59,7 +59,7 @@ int main() {
 
 	Array<t_drill> motors(10);
 	PRINT PRP " Producing 10 drills:" CENDL;
-	std::fill_n(motors.getArray(), motors.size(), t_drill(BRAVO, 115, "Gold"));
+	std::fill_n(motors.data(), motors.size(), t_drill(BRAVO, 115, "Gold"));
 	::iter(motors.data(), motors.size(), examine);
 	NEWL;
 	PRINT GRN BOLD " NEW DIAMOND VEIN DISCOVERED ON SECTOR ALPHA" CENDL;
